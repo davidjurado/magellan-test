@@ -1,0 +1,669 @@
+{
+  "paragraphs": [
+    {
+      "text": "%md\n\n## Test - NY Taxis",
+      "user": "anonymous",
+      "dateUpdated": "Jul 25, 2018 9:39:02 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "markdown",
+          "editOnDblClick": true
+        },
+        "editorMode": "ace/mode/markdown",
+        "editorHide": true,
+        "tableHide": false
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "HTML",
+            "data": "\u003ch2\u003eTest - NY Taxis\u003c/h2\u003e\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1532554711566_658142278",
+      "id": "20180725-213831_1032787321",
+      "dateCreated": "Jul 25, 2018 9:38:31 PM",
+      "dateStarted": "Jul 25, 2018 9:39:02 PM",
+      "dateFinished": "Jul 25, 2018 9:39:03 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "import magellan._\nimport org.apache.spark.sql.magellan.dsl.expressions._\n\nimport org.apache.spark.sql.Row\nimport org.apache.spark.sql.functions._\nimport org.apache.spark.sql.types._",
+      "user": "anonymous",
+      "dateUpdated": "Jul 24, 2018 6:30:48 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "import magellan._\nimport org.apache.spark.sql.magellan.dsl.expressions._\nimport org.apache.spark.sql.Row\nimport org.apache.spark.sql.functions._\nimport org.apache.spark.sql.types._\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1532449534640_825015941",
+      "id": "20180724-162534_465505494",
+      "dateCreated": "Jul 24, 2018 4:25:34 PM",
+      "dateStarted": "Jul 24, 2018 6:30:48 PM",
+      "dateFinished": "Jul 24, 2018 6:30:49 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "val schema \u003d StructType(Array(\n    StructField(\"No\", StringType, false),\n    StructField(\"lpep_pickup_datetime\", StringType, false),\n    StructField(\"Lpep_dropoff_datetime\", StringType, false),\n    StructField(\"Store_and_fwd_flag\", StringType, false),\n    StructField(\"RateCodeID\", StringType, false),\n    StructField(\"Pickup_longitude\", DoubleType, false),\n    StructField(\"Pickup_latitude\", DoubleType, false),\n    StructField(\"Dropoff_longitude\", DoubleType, false),\n    StructField(\"Dropoff_latitude\", DoubleType, false),\n    StructField(\"Passenger_count\", IntegerType, false),\n    StructField(\"Trip_distance\", DoubleType, false),\n    StructField(\"Fare_amount\", DoubleType, false),\n    StructField(\"Extra\", DoubleType, false),\n    StructField(\"MTA_tax\", DoubleType, false),\n    StructField(\"Tip_amount\", DoubleType, false),\n    StructField(\"Tolls_amount\", DoubleType, false),\n    StructField(\"Ehail_fee\", StringType, false),\n    StructField(\"improvement_surcharge\", StringType, false),\n    StructField(\"Total_amount\", DoubleType, false),\n    StructField(\"Payment_type\", IntegerType, false),\n    StructField(\"Trip_type \", IntegerType, false)))",
+      "user": "anonymous",
+      "dateUpdated": "Jul 24, 2018 6:30:50 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "schema: org.apache.spark.sql.types.StructType \u003d StructType(StructField(No,StringType,false), StructField(lpep_pickup_datetime,StringType,false), StructField(Lpep_dropoff_datetime,StringType,false), StructField(Store_and_fwd_flag,StringType,false), StructField(RateCodeID,StringType,false), StructField(Pickup_longitude,DoubleType,false), StructField(Pickup_latitude,DoubleType,false), StructField(Dropoff_longitude,DoubleType,false), StructField(Dropoff_latitude,DoubleType,false), StructField(Passenger_count,IntegerType,false), StructField(Trip_distance,DoubleType,false), StructField(Fare_amount,DoubleType,false), StructField(Extra,DoubleType,false), StructField(MTA_tax,DoubleType,false), StructField(Tip_amount,DoubleType,false), StructField(Tolls_amount,DoubleType,false), StructField(Ehail..."
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1532449576228_2090131621",
+      "id": "20180724-162616_1710035392",
+      "dateCreated": "Jul 24, 2018 4:26:16 PM",
+      "dateStarted": "Jul 24, 2018 6:30:50 PM",
+      "dateFinished": "Jul 24, 2018 6:30:51 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": " val trips \u003d sqlContext.read\n      .format(\"com.databricks.spark.csv\")\n      .option(\"comment\", \"V\")\n      .option(\"mode\", \"DROPMALFORMED\")\n      .schema(schema)\n      .load(\"/files/green_tripdata_2015-09.csv\")\n      .withColumn(\"point\", \n       point($\"Pickup_longitude\",$\"Pickup_latitude\"))\n      .cache()",
+      "user": "anonymous",
+      "dateUpdated": "Jul 24, 2018 6:30:54 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "trips: org.apache.spark.sql.Dataset[org.apache.spark.sql.Row] \u003d [No: string, lpep_pickup_datetime: string ... 20 more fields]\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1532449581181_-1576140648",
+      "id": "20180724-162621_1476766059",
+      "dateCreated": "Jul 24, 2018 4:26:21 PM",
+      "dateStarted": "Jul 24, 2018 6:30:54 PM",
+      "dateFinished": "Jul 24, 2018 6:30:54 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "trips.count()",
+      "user": "anonymous",
+      "dateUpdated": "Jul 24, 2018 6:30:57 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "res73: Long \u003d 1494926\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1532449735052_-975484674",
+      "id": "20180724-162855_1885524167",
+      "dateCreated": "Jul 24, 2018 4:28:55 PM",
+      "dateStarted": "Jul 24, 2018 6:30:57 PM",
+      "dateFinished": "Jul 24, 2018 6:31:44 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "val neighborhoods \u003d sqlContext.read\n      .format(\"magellan\")\n      .option(\"type\", \"geojson\")\n      .load(\"/files/neighborhoods.geojson\")\n      .select($\"polygon\", \n       $\"metadata\"(\"neighborhood\").as(\"neighborhood\"))\n      .cache()",
+      "user": "anonymous",
+      "dateUpdated": "Jul 24, 2018 6:32:54 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "neighborhoods: org.apache.spark.sql.Dataset[org.apache.spark.sql.Row] \u003d [polygon: polygon, neighborhood: string]\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1532449764556_-782310078",
+      "id": "20180724-162924_1852883305",
+      "dateCreated": "Jul 24, 2018 4:29:24 PM",
+      "dateStarted": "Jul 24, 2018 6:32:54 PM",
+      "dateFinished": "Jul 24, 2018 6:32:55 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "neighborhoods.count()",
+      "user": "anonymous",
+      "dateUpdated": "Jul 24, 2018 6:32:57 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "res74: Long \u003d 310\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1532449974619_223701550",
+      "id": "20180724-163254_289536977",
+      "dateCreated": "Jul 24, 2018 4:32:54 PM",
+      "dateStarted": "Jul 24, 2018 6:32:57 PM",
+      "dateFinished": "Jul 24, 2018 6:32:58 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": " val joined \u003d trips.join(neighborhoods)\n        .where($\"point\" within $\"polygon\")",
+      "user": "anonymous",
+      "dateUpdated": "Jul 24, 2018 4:51:06 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "joined: org.apache.spark.sql.Dataset[org.apache.spark.sql.Row] \u003d [vendorId: string, lpep_pickup_datetime: string ... 22 more fields]\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1532449987379_1651336153",
+      "id": "20180724-163307_287039990",
+      "dateCreated": "Jul 24, 2018 4:33:07 PM",
+      "dateStarted": "Jul 24, 2018 4:51:06 PM",
+      "dateFinished": "Jul 24, 2018 4:51:07 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "joined.count()",
+      "user": "anonymous",
+      "dateUpdated": "Jul 24, 2018 4:51:09 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "res54: Long \u003d 1491765\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1532450001683_-1133076313",
+      "id": "20180724-163321_1410574151",
+      "dateCreated": "Jul 24, 2018 4:33:21 PM",
+      "dateStarted": "Jul 24, 2018 4:51:10 PM",
+      "dateFinished": "Jul 24, 2018 4:51:44 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "joined\n      .groupBy(\u0027neighborhood)\n      .count()\n      .orderBy($\"count\".desc).show()",
+      "user": "anonymous",
+      "dateUpdated": "Jul 24, 2018 6:40:02 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "+-------------------+------+\n|       neighborhood| count|\n+-------------------+------+\n|             Harlem|162948|\n|        East Harlem|144192|\n|       Williamsburg|130473|\n|            Astoria| 71927|\n|           Elmhurst| 60183|\n| Bedford-Stuyvesant| 54791|\n|   Long Island City| 48508|\n|Morningside Heights| 47465|\n| Washington Heights| 40971|\n|    Jackson Heights| 40939|\n|        Fort Greene| 40173|\n|         Park Slope| 36920|\n|           Woodside| 34147|\n|  Downtown Brooklyn| 33921|\n|         Greenpoint| 32866|\n|       Forest Hills| 30294|\n|      Crown Heights| 26872|\n|   Brooklyn Heights| 24707|\n|              DUMBO| 24336|\n|       Clinton Hill| 20593|\n+-------------------+------+\nonly showing top 20 rows\n\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1532450017564_1345122001",
+      "id": "20180724-163337_290235117",
+      "dateCreated": "Jul 24, 2018 4:33:37 PM",
+      "dateStarted": "Jul 24, 2018 6:40:02 PM",
+      "dateFinished": "Jul 24, 2018 6:40:52 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "trips.createOrReplaceTempView(\"trips\")\nneighborhoods.createOrReplaceTempView(\"neighborhoods\")\njoined.createOrReplaceTempView(\"joined\")",
+      "user": "anonymous",
+      "dateUpdated": "Jul 24, 2018 4:59:44 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": []
+      },
+      "apps": [],
+      "jobName": "paragraph_1532450105363_-812660389",
+      "id": "20180724-163505_1352158345",
+      "dateCreated": "Jul 24, 2018 4:35:05 PM",
+      "dateStarted": "Jul 24, 2018 4:59:45 PM",
+      "dateFinished": "Jul 24, 2018 4:59:45 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "trips.printSchema()",
+      "user": "anonymous",
+      "dateUpdated": "Jul 24, 2018 4:57:22 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "root\n |-- vendorId: string (nullable \u003d true)\n |-- lpep_pickup_datetime: string (nullable \u003d true)\n |-- Lpep_dropoff_datetime: string (nullable \u003d true)\n |-- Store_and_fwd_flag: string (nullable \u003d true)\n |-- RateCodeID: string (nullable \u003d true)\n |-- Pickup_longitude: double (nullable \u003d true)\n |-- Pickup_latitude: double (nullable \u003d true)\n |-- Dropoff_longitude: double (nullable \u003d true)\n |-- Dropoff_latitude: double (nullable \u003d true)\n |-- Passenger_count: integer (nullable \u003d true)\n |-- Trip_distance: double (nullable \u003d true)\n |-- Fare_amount: double (nullable \u003d true)\n |-- Extra: double (nullable \u003d true)\n |-- MTA_tax: double (nullable \u003d true)\n |-- Tip_amount: double (nullable \u003d true)\n |-- Tolls_amount: double (nullable \u003d true)\n |-- Ehail_fee: string (nullable \u003d true)\n |-- improvement_surcharge: string (nullable \u003d true)\n |-- Total_amount: double (nullable \u003d true)\n |-- Payment_type: integer (nullable \u003d true)\n |-- Trip_type : integer (nullable \u003d true)\n |-- point: point (nullable \u003d false)\n\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1532451412216_1560152308",
+      "id": "20180724-165652_695958056",
+      "dateCreated": "Jul 24, 2018 4:56:52 PM",
+      "dateStarted": "Jul 24, 2018 4:57:22 PM",
+      "dateFinished": "Jul 24, 2018 4:57:23 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "neighborhoods.printSchema()",
+      "user": "anonymous",
+      "dateUpdated": "Jul 24, 2018 5:00:03 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "root\n |-- polygon: polygon (nullable \u003d true)\n |-- neighborhood: string (nullable \u003d true)\n\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1532451596149_142846274",
+      "id": "20180724-165956_1314278865",
+      "dateCreated": "Jul 24, 2018 4:59:56 PM",
+      "dateStarted": "Jul 24, 2018 5:00:03 PM",
+      "dateFinished": "Jul 24, 2018 5:00:03 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "joined.printSchema()",
+      "user": "anonymous",
+      "dateUpdated": "Jul 24, 2018 5:00:17 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "root\n |-- vendorId: string (nullable \u003d true)\n |-- lpep_pickup_datetime: string (nullable \u003d true)\n |-- Lpep_dropoff_datetime: string (nullable \u003d true)\n |-- Store_and_fwd_flag: string (nullable \u003d true)\n |-- RateCodeID: string (nullable \u003d true)\n |-- Pickup_longitude: double (nullable \u003d true)\n |-- Pickup_latitude: double (nullable \u003d true)\n |-- Dropoff_longitude: double (nullable \u003d true)\n |-- Dropoff_latitude: double (nullable \u003d true)\n |-- Passenger_count: integer (nullable \u003d true)\n |-- Trip_distance: double (nullable \u003d true)\n |-- Fare_amount: double (nullable \u003d true)\n |-- Extra: double (nullable \u003d true)\n |-- MTA_tax: double (nullable \u003d true)\n |-- Tip_amount: double (nullable \u003d true)\n |-- Tolls_amount: double (nullable \u003d true)\n |-- Ehail_fee: string (nullable \u003d true)\n |-- improvement_surcharge: string (nullable \u003d true)\n |-- Total_amount: double (nullable \u003d true)\n |-- Payment_type: integer (nullable \u003d true)\n |-- Trip_type : integer (nullable \u003d true)\n |-- point: point (nullable \u003d false)\n |-- polygon: polygon (nullable \u003d true)\n |-- neighborhood: string (nullable \u003d true)\n\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1532451608756_-78384344",
+      "id": "20180724-170008_1350415361",
+      "dateCreated": "Jul 24, 2018 5:00:08 PM",
+      "dateStarted": "Jul 24, 2018 5:00:17 PM",
+      "dateFinished": "Jul 24, 2018 5:00:17 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%spark2.sql\n\nselect * from trips limit 10",
+      "user": "anonymous",
+      "dateUpdated": "Jul 24, 2018 4:59:15 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {
+          "0": {
+            "graph": {
+              "mode": "table",
+              "height": 300.0,
+              "optionOpen": false
+            },
+            "helium": {}
+          }
+        },
+        "editorSetting": {
+          "language": "sql"
+        },
+        "editorMode": "ace/mode/sql"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TABLE",
+            "data": "vendorId\tlpep_pickup_datetime\tLpep_dropoff_datetime\tStore_and_fwd_flag\tRateCodeID\tPickup_longitude\tPickup_latitude\tDropoff_longitude\tDropoff_latitude\tPassenger_count\tTrip_distance\tFare_amount\tExtra\tMTA_tax\tTip_amount\tTolls_amount\tEhail_fee\timprovement_surcharge\tTotal_amount\tPayment_type\tTrip_type \tpoint\n2\t2015-09-01 00:02:34\t2015-09-01 00:02:38\tN\t5\t-73.97948455810547\t40.68495559692383\t-73.97943115234375\t40.685020446777344\t1\t0.0\t7.8\t0.0\t0.0\t1.95\t0.0\tnull\t0\t9.75\t1\t2\tPoint(-73.97948455810547, 40.68495559692383)\n2\t2015-09-01 00:04:20\t2015-09-01 00:04:24\tN\t5\t-74.01079559326172\t40.91221618652344\t-74.01078033447266\t40.91221237182617\t1\t0.0\t45.0\t0.0\t0.0\t0.0\t0.0\tnull\t0\t45.0\t1\t2\tPoint(-74.01079559326172, 40.91221618652344)\n2\t2015-09-01 00:01:50\t2015-09-01 00:04:24\tN\t1\t-73.9214096069336\t40.76670837402344\t-73.91441345214844\t40.764686584472656\t1\t0.59\t4.0\t0.5\t0.5\t0.5\t0.0\tnull\t0.3\t5.8\t1\t1\tPoint(-73.9214096069336, 40.76670837402344)\n2\t2015-09-01 00:02:36\t2015-09-01 00:06:42\tN\t1\t-73.92138671875\t40.76667785644531\t-73.93142700195312\t40.771583557128906\t1\t0.74\t5.0\t0.5\t0.5\t0.0\t0.0\tnull\t0.3\t6.3\t2\t1\tPoint(-73.92138671875, 40.76667785644531)\n2\t2015-09-01 00:00:14\t2015-09-01 00:04:20\tN\t1\t-73.95548248291016\t40.714046478271484\t-73.94441223144531\t40.71472930908203\t1\t0.61\t5.0\t0.5\t0.5\t0.0\t0.0\tnull\t0.3\t6.3\t2\t1\tPoint(-73.95548248291016, 40.714046478271484)\n2\t2015-09-01 00:00:39\t2015-09-01 00:05:20\tN\t1\t-73.94529724121094\t40.80818557739258\t-73.93766784667969\t40.821197509765625\t1\t1.07\t5.5\t0.5\t0.5\t1.36\t0.0\tnull\t0.3\t8.16\t1\t1\tPoint(-73.94529724121094, 40.80818557739258)\n2\t2015-09-01 00:00:52\t2015-09-01 00:05:50\tN\t1\t-73.89087677001953\t40.74642562866211\t-73.87692260742188\t40.75630569458008\t1\t1.43\t6.5\t0.5\t0.5\t0.0\t0.0\tnull\t0.3\t7.8\t1\t1\tPoint(-73.89087677001953, 40.74642562866211)\n2\t2015-09-01 00:02:15\t2015-09-01 00:05:34\tN\t1\t-73.94670104980469\t40.79732131958008\t-73.9376449584961\t40.80451583862305\t1\t0.9\t5.0\t0.5\t0.5\t0.0\t0.0\tnull\t0.3\t6.3\t2\t1\tPoint(-73.94670104980469, 40.79732131958008)\n2\t2015-09-01 00:02:36\t2015-09-01 00:07:20\tN\t1\t-73.96315002441406\t40.69382858276367\t-73.956787109375\t40.6805305480957\t1\t1.33\t6.0\t0.5\t0.5\t1.46\t0.0\tnull\t0.3\t8.76\t1\t1\tPoint(-73.96315002441406, 40.69382858276367)\n2\t2015-09-01 00:02:13\t2015-09-01 00:07:23\tN\t1\t-73.89682006835938\t40.74612808227539\t-73.88862609863281\t40.752723693847656\t1\t0.84\t5.5\t0.5\t0.5\t0.0\t0.0\tnull\t0.3\t6.8\t2\t1\tPoint(-73.89682006835938, 40.74612808227539)\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1532451438610_-1644559199",
+      "id": "20180724-165718_1750649860",
+      "dateCreated": "Jul 24, 2018 4:57:18 PM",
+      "dateStarted": "Jul 24, 2018 4:59:15 PM",
+      "dateFinished": "Jul 24, 2018 4:59:15 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%spark2.sql\n\nselect * from neighborhoods limit 10",
+      "user": "anonymous",
+      "dateUpdated": "Jul 24, 2018 5:00:44 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TABLE",
+            "data": "polygon\tneighborhood\nmagellan.Polygon@724abc90\tAllerton\nmagellan.Polygon@f42dc37b\tAlley Pond Park\nmagellan.Polygon@d853b16f\tArden Heights\nmagellan.Polygon@7214c4f9\tArlington\nmagellan.Polygon@a2041546\tArrochar\nmagellan.Polygon@bdba06fc\tArverne\nmagellan.Polygon@72d62c5c\tAstoria\nmagellan.Polygon@33f2f524\tBath Beach\nmagellan.Polygon@aa0466a8\tBattery Park City\nmagellan.Polygon@92a5ea02\tBay Ridge\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1532451622759_-905796982",
+      "id": "20180724-170022_1266182066",
+      "dateCreated": "Jul 24, 2018 5:00:22 PM",
+      "dateStarted": "Jul 24, 2018 5:00:44 PM",
+      "dateFinished": "Jul 24, 2018 5:00:44 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%spark2.sql\n\nselect * from joined limit 10",
+      "user": "anonymous",
+      "dateUpdated": "Jul 24, 2018 5:01:29 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TABLE",
+            "data": "vendorId\tlpep_pickup_datetime\tLpep_dropoff_datetime\tStore_and_fwd_flag\tRateCodeID\tPickup_longitude\tPickup_latitude\tDropoff_longitude\tDropoff_latitude\tPassenger_count\tTrip_distance\tFare_amount\tExtra\tMTA_tax\tTip_amount\tTolls_amount\tEhail_fee\timprovement_surcharge\tTotal_amount\tPayment_type\tTrip_type \tpoint\tpolygon\tneighborhood\n2\t2015-09-01 00:02:34\t2015-09-01 00:02:38\tN\t5\t-73.97948455810547\t40.68495559692383\t-73.97943115234375\t40.685020446777344\t1\t0.0\t7.8\t0.0\t0.0\t1.95\t0.0\tnull\t0\t9.75\t1\t2\tPoint(-73.97948455810547, 40.68495559692383)\tmagellan.Polygon@55198420\tBoerum Hill\n2\t2015-09-01 00:01:50\t2015-09-01 00:04:24\tN\t1\t-73.9214096069336\t40.76670837402344\t-73.91441345214844\t40.764686584472656\t1\t0.59\t4.0\t0.5\t0.5\t0.5\t0.0\tnull\t0.3\t5.8\t1\t1\tPoint(-73.9214096069336, 40.76670837402344)\tmagellan.Polygon@b3909977\tAstoria\n2\t2015-09-01 00:02:36\t2015-09-01 00:06:42\tN\t1\t-73.92138671875\t40.76667785644531\t-73.93142700195312\t40.771583557128906\t1\t0.74\t5.0\t0.5\t0.5\t0.0\t0.0\tnull\t0.3\t6.3\t2\t1\tPoint(-73.92138671875, 40.76667785644531)\tmagellan.Polygon@7940ace7\tAstoria\n2\t2015-09-01 00:00:14\t2015-09-01 00:04:20\tN\t1\t-73.95548248291016\t40.714046478271484\t-73.94441223144531\t40.71472930908203\t1\t0.61\t5.0\t0.5\t0.5\t0.0\t0.0\tnull\t0.3\t6.3\t2\t1\tPoint(-73.95548248291016, 40.714046478271484)\tmagellan.Polygon@8204eeb4\tWilliamsburg\n2\t2015-09-01 00:00:39\t2015-09-01 00:05:20\tN\t1\t-73.94529724121094\t40.80818557739258\t-73.93766784667969\t40.821197509765625\t1\t1.07\t5.5\t0.5\t0.5\t1.36\t0.0\tnull\t0.3\t8.16\t1\t1\tPoint(-73.94529724121094, 40.80818557739258)\tmagellan.Polygon@e4c70dab\tHarlem\n2\t2015-09-01 00:00:52\t2015-09-01 00:05:50\tN\t1\t-73.89087677001953\t40.74642562866211\t-73.87692260742188\t40.75630569458008\t1\t1.43\t6.5\t0.5\t0.5\t0.0\t0.0\tnull\t0.3\t7.8\t1\t1\tPoint(-73.89087677001953, 40.74642562866211)\tmagellan.Polygon@96de234e\tElmhurst\n2\t2015-09-01 00:02:15\t2015-09-01 00:05:34\tN\t1\t-73.94670104980469\t40.79732131958008\t-73.9376449584961\t40.80451583862305\t1\t0.9\t5.0\t0.5\t0.5\t0.0\t0.0\tnull\t0.3\t6.3\t2\t1\tPoint(-73.94670104980469, 40.79732131958008)\tmagellan.Polygon@9be5b1ae\tEast Harlem\n2\t2015-09-01 00:02:36\t2015-09-01 00:07:20\tN\t1\t-73.96315002441406\t40.69382858276367\t-73.956787109375\t40.6805305480957\t1\t1.33\t6.0\t0.5\t0.5\t1.46\t0.0\tnull\t0.3\t8.76\t1\t1\tPoint(-73.96315002441406, 40.69382858276367)\tmagellan.Polygon@19eebacc\tClinton Hill\n2\t2015-09-01 00:02:13\t2015-09-01 00:07:23\tN\t1\t-73.89682006835938\t40.74612808227539\t-73.88862609863281\t40.752723693847656\t1\t0.84\t5.5\t0.5\t0.5\t0.0\t0.0\tnull\t0.3\t6.8\t2\t1\tPoint(-73.89682006835938, 40.74612808227539)\tmagellan.Polygon@968b9e9c\tWoodside\n2\t2015-09-01 00:01:12\t2015-09-01 00:05:03\tN\t1\t-73.82991790771484\t40.713768005371094\t-73.83494567871094\t40.70729064941406\t2\t0.8\t5.0\t0.5\t0.5\t0.0\t0.0\tnull\t0.3\t6.3\t2\t1\tPoint(-73.82991790771484, 40.713768005371094)\tmagellan.Polygon@5bb7808a\tKew Gardens\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1532451463696_1586992786",
+      "id": "20180724-165743_169180450",
+      "dateCreated": "Jul 24, 2018 4:57:43 PM",
+      "dateStarted": "Jul 24, 2018 5:01:30 PM",
+      "dateFinished": "Jul 24, 2018 5:01:30 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%spark2.sql\n\nselect neighborhood,count(*) as count from joined group by neighborhood order by count desc limit 20",
+      "user": "anonymous",
+      "dateUpdated": "Jul 24, 2018 5:58:36 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TABLE",
+            "data": "neighborhood\tcount\nHarlem\t162948\nEast Harlem\t144192\nWilliamsburg\t130473\nAstoria\t71927\nElmhurst\t60183\nBedford-Stuyvesant\t54791\nLong Island City\t48508\nMorningside Heights\t47465\nWashington Heights\t40971\nJackson Heights\t40939\nFort Greene\t40173\nPark Slope\t36920\nWoodside\t34147\nDowntown Brooklyn\t33921\nGreenpoint\t32866\nForest Hills\t30294\nCrown Heights\t26872\nBrooklyn Heights\t24707\nDUMBO\t24336\nClinton Hill\t20593\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1532451689783_-444959745",
+      "id": "20180724-170129_2076544962",
+      "dateCreated": "Jul 24, 2018 5:01:29 PM",
+      "dateStarted": "Jul 24, 2018 5:58:36 PM",
+      "dateFinished": "Jul 24, 2018 5:59:15 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%spark2.sql\n",
+      "user": "anonymous",
+      "dateUpdated": "Jul 24, 2018 5:56:07 PM",
+      "config": {},
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "jobName": "paragraph_1532454967879_755549816",
+      "id": "20180724-175607_218053105",
+      "dateCreated": "Jul 24, 2018 5:56:07 PM",
+      "status": "READY",
+      "progressUpdateIntervalMs": 500
+    }
+  ],
+  "name": "Test1",
+  "id": "2DJRTXX8H",
+  "angularObjects": {
+    "2CHS8UYQQ:shared_process": [],
+    "2C8A4SZ9T_livy2:shared_process": [],
+    "2CK8A9MEG:shared_process": [],
+    "2C4U48MY3_spark2:shared_process": [],
+    "2CKAY1A8Y:shared_process": [],
+    "2CKEKWY8Z:shared_process": []
+  },
+  "config": {},
+  "info": {}
+}

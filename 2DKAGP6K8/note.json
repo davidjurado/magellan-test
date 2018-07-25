@@ -1,0 +1,250 @@
+{
+  "paragraphs": [
+    {
+      "text": "%md\n\n## Magellan\n\nMagellan es un motor de ejecución distribuida para análisis geoespacial en big data. Se implementa sobre Apache Spark y aprovecha al máximo las modernas técnicas de bases de datos, como el diseño eficiente de datos, la generación de códigos y la optimización de consultas para optimizar las consultas geoespaciales.\n\nHa sido desarrollado por Ram Sriharsha y actualmente se encuentra en la versión 1.0.5. Puede descargarse desde este [link](https://spark-packages.org/package/harsha2010/magellan) para más información acceder al repositorio en [GitHub](https://github.com/harsha2010/magellan)",
+      "dateUpdated": "Jul 25, 2018 9:36:22 PM",
+      "config": {
+        "tableHide": false,
+        "editorSetting": {
+          "language": "markdown",
+          "editOnDblClick": true
+        },
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/markdown",
+        "editorHide": true,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "HTML",
+            "data": "\u003ch2\u003eMagellan\u003c/h2\u003e\n\u003cp\u003eMagellan es un motor de ejecución distribuida para análisis geoespacial en big data. Se implementa sobre Apache Spark y aprovecha al máximo las modernas técnicas de bases de datos, como el diseño eficiente de datos, la generación de códigos y la optimización de consultas para optimizar las consultas geoespaciales.\u003c/p\u003e\n\u003cp\u003eHa sido desarrollado por Ram Sriharsha y actualmente se encuentra en la versión 1.0.5. Puede descargarse desde este \u003ca href\u003d\"https://spark-packages.org/package/harsha2010/magellan\"\u003elink\u003c/a\u003e para más información acceder al repositorio en \u003ca href\u003d\"https://github.com/harsha2010/magellan\"\u003eGitHub\u003c/a\u003e\u003c/p\u003e\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1532554582602_1811664929",
+      "id": "20180725-205525_1514663641",
+      "dateCreated": "Jul 25, 2018 9:36:22 PM",
+      "status": "READY",
+      "errorMessage": "",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "import magellan.{Point, Polygon}\nimport org.apache.spark.sql.magellan.dsl.expressions._\nimport org.apache.spark.sql.types._",
+      "user": "anonymous",
+      "dateUpdated": "Jul 25, 2018 9:36:30 PM",
+      "config": {
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/scala",
+        "results": {},
+        "enabled": true,
+        "editorSetting": {
+          "language": "scala"
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "import magellan.{Point, Polygon}\nimport org.apache.spark.sql.magellan.dsl.expressions._\nimport org.apache.spark.sql.types._\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1532554582608_1820129405",
+      "id": "20180723-161621_1016585704",
+      "dateCreated": "Jul 25, 2018 9:36:22 PM",
+      "dateStarted": "Jul 25, 2018 9:36:30 PM",
+      "dateFinished": "Jul 25, 2018 9:36:46 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "val points \u003d sc.parallelize(Seq((-1.0, -1.0), (-1.0, 1.0), (1.0, -1.0))).toDF(\"x\", \"y\").select(point($\"x\", $\"y\").as(\"point\"))\n\npoints.show()",
+      "user": "anonymous",
+      "dateUpdated": "Jul 25, 2018 9:36:49 PM",
+      "config": {
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/scala",
+        "results": {},
+        "enabled": true,
+        "editorSetting": {
+          "language": "scala"
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "points: org.apache.spark.sql.DataFrame \u003d [point: point]\n+-----------------+\n|            point|\n+-----------------+\n|Point(-1.0, -1.0)|\n| Point(-1.0, 1.0)|\n| Point(1.0, -1.0)|\n+-----------------+\n\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1532554582609_1819744656",
+      "id": "20180723-161630_620411280",
+      "dateCreated": "Jul 25, 2018 9:36:22 PM",
+      "dateStarted": "Jul 25, 2018 9:36:49 PM",
+      "dateFinished": "Jul 25, 2018 9:37:00 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "case class PolygonRecord(polygon: magellan.Polygon)\n\nval ring \u003d Array(Point(1.0, 1.0), Point(1.0, -1.0),\n Point(-1.0, -1.0), Point(-1.0, 1.0),\n Point(1.0, 1.0))\nval polygons \u003d sc.parallelize(Seq(\n    PolygonRecord(Polygon(Array(0), ring))\n  )).toDF()\n  \npolygons.show()",
+      "user": "anonymous",
+      "dateUpdated": "Jul 25, 2018 9:37:02 PM",
+      "config": {
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/scala",
+        "results": {},
+        "enabled": true,
+        "editorSetting": {
+          "language": "scala"
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "defined class PolygonRecord\nring: Array[magellan.Point] \u003d Array(Point(1.0, 1.0), Point(1.0, -1.0), Point(-1.0, -1.0), Point(-1.0, 1.0), Point(1.0, 1.0))\npolygons: org.apache.spark.sql.DataFrame \u003d [polygon: polygon]\n+--------------------+\n|             polygon|\n+--------------------+\n|magellan.Polygon@...|\n+--------------------+\n\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1532554582612_1818590409",
+      "id": "20180723-161738_977531204",
+      "dateCreated": "Jul 25, 2018 9:36:22 PM",
+      "dateStarted": "Jul 25, 2018 9:37:02 PM",
+      "dateFinished": "Jul 25, 2018 9:37:05 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "points.join(polygons).where($\"point\" within $\"polygon\").show()",
+      "user": "anonymous",
+      "dateUpdated": "Jul 25, 2018 9:37:07 PM",
+      "config": {
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/scala",
+        "results": {},
+        "enabled": true,
+        "editorSetting": {
+          "language": "scala"
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "+-----+-------+\n|point|polygon|\n+-----+-------+\n+-----+-------+\n\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1532554582612_1818590409",
+      "id": "20180723-161803_79889234",
+      "dateCreated": "Jul 25, 2018 9:36:22 PM",
+      "dateStarted": "Jul 25, 2018 9:37:07 PM",
+      "dateFinished": "Jul 25, 2018 9:37:09 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "points.join(polygons).where($\"point\" intersects $\"polygon\").show()",
+      "user": "anonymous",
+      "dateUpdated": "Jul 25, 2018 9:37:16 PM",
+      "config": {
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/scala",
+        "results": {},
+        "enabled": true,
+        "editorSetting": {
+          "language": "scala"
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "+-----------------+--------------------+\n|            point|             polygon|\n+-----------------+--------------------+\n|Point(-1.0, -1.0)|magellan.Polygon@...|\n| Point(-1.0, 1.0)|magellan.Polygon@...|\n| Point(1.0, -1.0)|magellan.Polygon@...|\n+-----------------+--------------------+\n\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1532554582613_1818205660",
+      "id": "20180723-161838_15843914",
+      "dateCreated": "Jul 25, 2018 9:36:22 PM",
+      "dateStarted": "Jul 25, 2018 9:37:16 PM",
+      "dateFinished": "Jul 25, 2018 9:37:17 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "dateUpdated": "Jul 25, 2018 9:36:22 PM",
+      "config": {
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/scala",
+        "results": {},
+        "enabled": true,
+        "editorSetting": {
+          "language": "scala"
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "jobName": "paragraph_1532554582614_1819359907",
+      "id": "20180723-161857_45151930",
+      "dateCreated": "Jul 25, 2018 9:36:22 PM",
+      "status": "READY",
+      "errorMessage": "",
+      "progressUpdateIntervalMs": 500
+    }
+  ],
+  "name": "Intro",
+  "id": "2DKAGP6K8",
+  "angularObjects": {
+    "2CHS8UYQQ:shared_process": [],
+    "2C8A4SZ9T_livy2:shared_process": [],
+    "2CK8A9MEG:shared_process": [],
+    "2C4U48MY3_spark2:shared_process": [],
+    "2CKAY1A8Y:shared_process": [],
+    "2CKEKWY8Z:shared_process": []
+  },
+  "config": {},
+  "info": {}
+}
