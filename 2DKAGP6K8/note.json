@@ -2,7 +2,8 @@
   "paragraphs": [
     {
       "text": "%md\n\n## Magellan\n\nMagellan es un motor de ejecución distribuida para análisis geoespacial en big data. Se implementa sobre Apache Spark y aprovecha al máximo las modernas técnicas de bases de datos, como el diseño eficiente de datos, la generación de códigos y la optimización de consultas para optimizar las consultas geoespaciales.\n\nHa sido desarrollado por Ram Sriharsha y actualmente se encuentra en la versión 1.0.5. Puede descargarse desde este [link](https://spark-packages.org/package/harsha2010/magellan) para más información acceder al repositorio en [GitHub](https://github.com/harsha2010/magellan)",
-      "dateUpdated": "Jul 25, 2018 9:36:22 PM",
+      "user": "anonymous",
+      "dateUpdated": "Jul 26, 2018 6:36:56 PM",
       "config": {
         "tableHide": false,
         "editorSetting": {
@@ -32,14 +33,53 @@
       "jobName": "paragraph_1532554582602_1811664929",
       "id": "20180725-205525_1514663641",
       "dateCreated": "Jul 25, 2018 9:36:22 PM",
-      "status": "READY",
-      "errorMessage": "",
+      "dateStarted": "Jul 26, 2018 6:36:56 PM",
+      "dateFinished": "Jul 26, 2018 6:36:56 PM",
+      "status": "FINISHED",
       "progressUpdateIntervalMs": 500
     },
     {
-      "text": "import magellan.{Point, Polygon}\nimport org.apache.spark.sql.magellan.dsl.expressions._\nimport org.apache.spark.sql.types._",
+      "text": "%md\n\n#### Paquetes a importar\n",
       "user": "anonymous",
-      "dateUpdated": "Jul 25, 2018 9:36:30 PM",
+      "dateUpdated": "Jul 26, 2018 6:37:27 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "markdown",
+          "editOnDblClick": true
+        },
+        "editorMode": "ace/mode/markdown",
+        "editorHide": true,
+        "tableHide": false
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "HTML",
+            "data": "\u003ch4\u003ePaquetes a importar\u003c/h4\u003e\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1532629986937_1659304749",
+      "id": "20180726-183306_1252490474",
+      "dateCreated": "Jul 26, 2018 6:33:06 PM",
+      "dateStarted": "Jul 26, 2018 6:37:27 PM",
+      "dateFinished": "Jul 26, 2018 6:37:28 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "import magellan.{Point, Polygon, Line, PolyLine}\nimport org.apache.spark.sql.magellan.dsl.expressions._\nimport org.apache.spark.sql.types._",
+      "user": "anonymous",
+      "dateUpdated": "Jul 26, 2018 6:47:12 PM",
       "config": {
         "colWidth": 12.0,
         "editorMode": "ace/mode/scala",
@@ -58,7 +98,7 @@
         "msg": [
           {
             "type": "TEXT",
-            "data": "import magellan.{Point, Polygon}\nimport org.apache.spark.sql.magellan.dsl.expressions._\nimport org.apache.spark.sql.types._\n"
+            "data": "import magellan.{Point, Polygon, Line, PolyLine}\nimport org.apache.spark.sql.magellan.dsl.expressions._\nimport org.apache.spark.sql.types._\n"
           }
         ]
       },
@@ -66,15 +106,53 @@
       "jobName": "paragraph_1532554582608_1820129405",
       "id": "20180723-161621_1016585704",
       "dateCreated": "Jul 25, 2018 9:36:22 PM",
-      "dateStarted": "Jul 25, 2018 9:36:30 PM",
-      "dateFinished": "Jul 25, 2018 9:36:46 PM",
+      "dateStarted": "Jul 26, 2018 6:47:13 PM",
+      "dateFinished": "Jul 26, 2018 6:47:13 PM",
       "status": "FINISHED",
       "progressUpdateIntervalMs": 500
     },
     {
-      "text": "val points \u003d sc.parallelize(Seq((-1.0, -1.0), (-1.0, 1.0), (1.0, -1.0))).toDF(\"x\", \"y\").select(point($\"x\", $\"y\").as(\"point\"))\n\npoints.show()",
+      "text": "%md\n\n#### Data Structures: Point",
       "user": "anonymous",
-      "dateUpdated": "Jul 25, 2018 9:36:49 PM",
+      "dateUpdated": "Jul 26, 2018 6:37:31 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "markdown",
+          "editOnDblClick": true
+        },
+        "editorMode": "ace/mode/markdown",
+        "editorHide": true,
+        "tableHide": false
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "HTML",
+            "data": "\u003ch4\u003eData Structures: Point\u003c/h4\u003e\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1532629920291_-1664464378",
+      "id": "20180726-183200_1045366592",
+      "dateCreated": "Jul 26, 2018 6:32:00 PM",
+      "dateStarted": "Jul 26, 2018 6:37:31 PM",
+      "dateFinished": "Jul 26, 2018 6:37:31 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "val points \u003d sc.parallelize(Seq((-1.0, -1.0), (-1.0, 1.0), (0.5, -0.5))).toDF(\"x\", \"y\").select(point($\"x\", $\"y\").as(\"point\"))\n\npoints.show()",
+      "user": "anonymous",
+      "dateUpdated": "Jul 26, 2018 6:49:41 PM",
       "config": {
         "colWidth": 12.0,
         "editorMode": "ace/mode/scala",
@@ -93,7 +171,7 @@
         "msg": [
           {
             "type": "TEXT",
-            "data": "points: org.apache.spark.sql.DataFrame \u003d [point: point]\n+-----------------+\n|            point|\n+-----------------+\n|Point(-1.0, -1.0)|\n| Point(-1.0, 1.0)|\n| Point(1.0, -1.0)|\n+-----------------+\n\n"
+            "data": "points: org.apache.spark.sql.DataFrame \u003d [point: point]\n+-----------------+\n|            point|\n+-----------------+\n|Point(-1.0, -1.0)|\n| Point(-1.0, 1.0)|\n| Point(0.5, -0.5)|\n+-----------------+\n\n"
           }
         ]
       },
@@ -101,15 +179,53 @@
       "jobName": "paragraph_1532554582609_1819744656",
       "id": "20180723-161630_620411280",
       "dateCreated": "Jul 25, 2018 9:36:22 PM",
-      "dateStarted": "Jul 25, 2018 9:36:49 PM",
-      "dateFinished": "Jul 25, 2018 9:37:00 PM",
+      "dateStarted": "Jul 26, 2018 6:49:41 PM",
+      "dateFinished": "Jul 26, 2018 6:49:42 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%md\n\n#### Data Structures: Polygon",
+      "user": "anonymous",
+      "dateUpdated": "Jul 26, 2018 6:49:46 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "markdown",
+          "editOnDblClick": true
+        },
+        "editorMode": "ace/mode/markdown",
+        "editorHide": true,
+        "tableHide": false
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "HTML",
+            "data": "\u003ch4\u003eData Structures: Polygon\u003c/h4\u003e\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1532630010921_-100689962",
+      "id": "20180726-183330_476514705",
+      "dateCreated": "Jul 26, 2018 6:33:30 PM",
+      "dateStarted": "Jul 26, 2018 6:49:46 PM",
+      "dateFinished": "Jul 26, 2018 6:49:46 PM",
       "status": "FINISHED",
       "progressUpdateIntervalMs": 500
     },
     {
       "text": "case class PolygonRecord(polygon: magellan.Polygon)\n\nval ring \u003d Array(Point(1.0, 1.0), Point(1.0, -1.0),\n Point(-1.0, -1.0), Point(-1.0, 1.0),\n Point(1.0, 1.0))\nval polygons \u003d sc.parallelize(Seq(\n    PolygonRecord(Polygon(Array(0), ring))\n  )).toDF()\n  \npolygons.show()",
       "user": "anonymous",
-      "dateUpdated": "Jul 25, 2018 9:37:02 PM",
+      "dateUpdated": "Jul 26, 2018 6:49:48 PM",
       "config": {
         "colWidth": 12.0,
         "editorMode": "ace/mode/scala",
@@ -136,15 +252,200 @@
       "jobName": "paragraph_1532554582612_1818590409",
       "id": "20180723-161738_977531204",
       "dateCreated": "Jul 25, 2018 9:36:22 PM",
-      "dateStarted": "Jul 25, 2018 9:37:02 PM",
-      "dateFinished": "Jul 25, 2018 9:37:05 PM",
+      "dateStarted": "Jul 26, 2018 6:49:48 PM",
+      "dateFinished": "Jul 26, 2018 6:49:49 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%md\n\n#### Data Structures: Line",
+      "user": "anonymous",
+      "dateUpdated": "Jul 26, 2018 6:49:51 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "markdown",
+          "editOnDblClick": true
+        },
+        "editorMode": "ace/mode/markdown",
+        "editorHide": true,
+        "tableHide": false
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "HTML",
+            "data": "\u003ch4\u003eData Structures: Line\u003c/h4\u003e\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1532630717263_-1006037537",
+      "id": "20180726-184517_1894027138",
+      "dateCreated": "Jul 26, 2018 6:45:17 PM",
+      "dateStarted": "Jul 26, 2018 6:49:51 PM",
+      "dateFinished": "Jul 26, 2018 6:49:51 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "case class LineExample(line: magellan.Line)\n\nval line \u003d Line(Point(1.0, 1.0), Point(1.0, -1.0))\n\nval lines \u003d sc.parallelize(Seq(\n      LineExample(line)\n    )).toDF()\n    \nlines.show()",
+      "user": "anonymous",
+      "dateUpdated": "Jul 26, 2018 6:49:53 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "defined class LineExample\nline: magellan.Line \u003d Line(Point(1.0, 1.0), Point(1.0, -1.0))\nlines: org.apache.spark.sql.DataFrame \u003d [line: line]\n+--------------------+\n|                line|\n+--------------------+\n|Line(Point(1.0, 1...|\n+--------------------+\n\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1532630727035_1117406967",
+      "id": "20180726-184527_1883264046",
+      "dateCreated": "Jul 26, 2018 6:45:27 PM",
+      "dateStarted": "Jul 26, 2018 6:49:53 PM",
+      "dateFinished": "Jul 26, 2018 6:49:54 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%md\n\n#### Data Structures: PolyLine",
+      "user": "anonymous",
+      "dateUpdated": "Jul 26, 2018 6:49:56 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "markdown",
+          "editOnDblClick": true
+        },
+        "editorMode": "ace/mode/markdown",
+        "editorHide": true,
+        "tableHide": false
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "HTML",
+            "data": "\u003ch4\u003eData Structures: PolyLine\u003c/h4\u003e\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1532630805519_-300253168",
+      "id": "20180726-184645_836544714",
+      "dateCreated": "Jul 26, 2018 6:46:45 PM",
+      "dateStarted": "Jul 26, 2018 6:49:56 PM",
+      "dateFinished": "Jul 26, 2018 6:49:56 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "case class PolyLineExample(polyline: magellan.PolyLine)\n\nval ring \u003d Array(Point(1.0, 1.0), Point(1.0, -1.0),\n      Point(-1.0, -1.0), Point(-1.0, 1.0))\n\nval polylines \u003d sc.parallelize(Seq(\n      PolyLineExample(PolyLine(Array(0), ring))\n    )).toDF()\n\npolylines.show()",
+      "user": "anonymous",
+      "dateUpdated": "Jul 26, 2018 6:49:58 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "defined class PolyLineExample\nring: Array[magellan.Point] \u003d Array(Point(1.0, 1.0), Point(1.0, -1.0), Point(-1.0, -1.0), Point(-1.0, 1.0))\npolylines: org.apache.spark.sql.DataFrame \u003d [polyline: polyline]\n+--------------------+\n|            polyline|\n+--------------------+\n|magellan.PolyLine...|\n+--------------------+\n\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1532630819556_1409986341",
+      "id": "20180726-184659_1816959182",
+      "dateCreated": "Jul 26, 2018 6:46:59 PM",
+      "dateStarted": "Jul 26, 2018 6:49:58 PM",
+      "dateFinished": "Jul 26, 2018 6:49:59 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%md\n\n#### Operación: within",
+      "user": "anonymous",
+      "dateUpdated": "Jul 26, 2018 6:50:04 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "markdown",
+          "editOnDblClick": true
+        },
+        "editorMode": "ace/mode/markdown",
+        "editorHide": true,
+        "tableHide": false
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "HTML",
+            "data": "\u003ch4\u003eOperación: within\u003c/h4\u003e\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1532630123159_1387118711",
+      "id": "20180726-183523_1834686471",
+      "dateCreated": "Jul 26, 2018 6:35:23 PM",
+      "dateStarted": "Jul 26, 2018 6:50:04 PM",
+      "dateFinished": "Jul 26, 2018 6:50:04 PM",
       "status": "FINISHED",
       "progressUpdateIntervalMs": 500
     },
     {
       "text": "points.join(polygons).where($\"point\" within $\"polygon\").show()",
       "user": "anonymous",
-      "dateUpdated": "Jul 25, 2018 9:37:07 PM",
+      "dateUpdated": "Jul 26, 2018 6:50:06 PM",
       "config": {
         "colWidth": 12.0,
         "editorMode": "ace/mode/scala",
@@ -163,7 +464,7 @@
         "msg": [
           {
             "type": "TEXT",
-            "data": "+-----+-------+\n|point|polygon|\n+-----+-------+\n+-----+-------+\n\n"
+            "data": "+----------------+--------------------+\n|           point|             polygon|\n+----------------+--------------------+\n|Point(0.5, -0.5)|magellan.Polygon@...|\n+----------------+--------------------+\n\n"
           }
         ]
       },
@@ -171,15 +472,53 @@
       "jobName": "paragraph_1532554582612_1818590409",
       "id": "20180723-161803_79889234",
       "dateCreated": "Jul 25, 2018 9:36:22 PM",
-      "dateStarted": "Jul 25, 2018 9:37:07 PM",
-      "dateFinished": "Jul 25, 2018 9:37:09 PM",
+      "dateStarted": "Jul 26, 2018 6:50:07 PM",
+      "dateFinished": "Jul 26, 2018 6:50:07 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%md\n\n#### Operación: intersects",
+      "user": "anonymous",
+      "dateUpdated": "Jul 26, 2018 6:51:57 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "markdown",
+          "editOnDblClick": true
+        },
+        "editorMode": "ace/mode/markdown",
+        "editorHide": true,
+        "tableHide": false
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "HTML",
+            "data": "\u003ch4\u003eOperación: intersects\u003c/h4\u003e\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1532630187940_-1835137480",
+      "id": "20180726-183627_62209190",
+      "dateCreated": "Jul 26, 2018 6:36:27 PM",
+      "dateStarted": "Jul 26, 2018 6:51:57 PM",
+      "dateFinished": "Jul 26, 2018 6:51:57 PM",
       "status": "FINISHED",
       "progressUpdateIntervalMs": 500
     },
     {
       "text": "points.join(polygons).where($\"point\" intersects $\"polygon\").show()",
       "user": "anonymous",
-      "dateUpdated": "Jul 25, 2018 9:37:16 PM",
+      "dateUpdated": "Jul 26, 2018 6:50:15 PM",
       "config": {
         "colWidth": 12.0,
         "editorMode": "ace/mode/scala",
@@ -198,7 +537,7 @@
         "msg": [
           {
             "type": "TEXT",
-            "data": "+-----------------+--------------------+\n|            point|             polygon|\n+-----------------+--------------------+\n|Point(-1.0, -1.0)|magellan.Polygon@...|\n| Point(-1.0, 1.0)|magellan.Polygon@...|\n| Point(1.0, -1.0)|magellan.Polygon@...|\n+-----------------+--------------------+\n\n"
+            "data": "+-----------------+--------------------+\n|            point|             polygon|\n+-----------------+--------------------+\n|Point(-1.0, -1.0)|magellan.Polygon@...|\n| Point(-1.0, 1.0)|magellan.Polygon@...|\n+-----------------+--------------------+\n\n"
           }
         ]
       },
@@ -206,32 +545,277 @@
       "jobName": "paragraph_1532554582613_1818205660",
       "id": "20180723-161838_15843914",
       "dateCreated": "Jul 25, 2018 9:36:22 PM",
-      "dateStarted": "Jul 25, 2018 9:37:16 PM",
-      "dateFinished": "Jul 25, 2018 9:37:17 PM",
+      "dateStarted": "Jul 26, 2018 6:50:15 PM",
+      "dateFinished": "Jul 26, 2018 6:50:16 PM",
       "status": "FINISHED",
       "progressUpdateIntervalMs": 500
     },
     {
-      "dateUpdated": "Jul 25, 2018 9:36:22 PM",
+      "text": "%md\n\n#### Operación: contains",
+      "user": "anonymous",
+      "dateUpdated": "Jul 26, 2018 6:51:35 PM",
       "config": {
         "colWidth": 12.0,
-        "editorMode": "ace/mode/scala",
-        "results": {},
         "enabled": true,
+        "results": {},
         "editorSetting": {
-          "language": "scala"
-        }
+          "language": "markdown",
+          "editOnDblClick": true
+        },
+        "editorMode": "ace/mode/markdown",
+        "editorHide": true,
+        "tableHide": false
       },
       "settings": {
         "params": {},
         "forms": {}
       },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "HTML",
+            "data": "\u003ch4\u003eOperación: contains\u003c/h4\u003e\n"
+          }
+        ]
+      },
       "apps": [],
-      "jobName": "paragraph_1532554582614_1819359907",
-      "id": "20180723-161857_45151930",
-      "dateCreated": "Jul 25, 2018 9:36:22 PM",
+      "jobName": "paragraph_1532630208212_-1196207474",
+      "id": "20180726-183648_2094740227",
+      "dateCreated": "Jul 26, 2018 6:36:48 PM",
+      "dateStarted": "Jul 26, 2018 6:51:35 PM",
+      "dateFinished": "Jul 26, 2018 6:51:35 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "points.join(polygons).where($\"polygon\" \u003e? $\"point\").show()\n",
+      "user": "anonymous",
+      "dateUpdated": "Jul 26, 2018 7:07:10 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "+----------------+--------------------+\n|           point|             polygon|\n+----------------+--------------------+\n|Point(0.5, -0.5)|magellan.Polygon@...|\n+----------------+--------------------+\n\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1532631095187_1803182748",
+      "id": "20180726-185135_1965385082",
+      "dateCreated": "Jul 26, 2018 6:51:35 PM",
+      "dateStarted": "Jul 26, 2018 7:07:10 PM",
+      "dateFinished": "Jul 26, 2018 7:07:11 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%md \n\n#### Índices espaciales",
+      "user": "anonymous",
+      "dateUpdated": "Jul 26, 2018 7:14:49 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "markdown",
+          "editOnDblClick": true
+        },
+        "editorMode": "ace/mode/markdown",
+        "editorHide": true,
+        "tableHide": false
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "HTML",
+            "data": "\u003ch4\u003eÍndices espaciales\u003c/h4\u003e\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1532631117644_64533117",
+      "id": "20180726-185157_617205765",
+      "dateCreated": "Jul 26, 2018 6:51:57 PM",
+      "dateStarted": "Jul 26, 2018 7:14:49 PM",
+      "dateFinished": "Jul 26, 2018 7:14:49 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "val neighborhoods \u003d sqlContext.read\n      .format(\"magellan\")\n      .option(\"type\", \"geojson\")\n      .option(\"magellan.index\", \"true\") //Esto crea una columna adicional llamada índice que contiene la lista de Curvas ZOrder de la precisión dada que cubren cada geometría en el conjunto de datos.\n      .option(\"magellan.index.precision\", \"25\")\n      .load(\"/files/neighborhoods.geojson\")\n      .cache()",
+      "user": "anonymous",
+      "dateUpdated": "Jul 26, 2018 7:11:47 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "neighborhoods: org.apache.spark.sql.Dataset[org.apache.spark.sql.Row] \u003d [point: point, polyline: polyline ... 4 more fields]\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1532632102409_1046218029",
+      "id": "20180726-190822_2025080040",
+      "dateCreated": "Jul 26, 2018 7:08:22 PM",
+      "dateStarted": "Jul 26, 2018 7:11:47 PM",
+      "dateFinished": "Jul 26, 2018 7:11:47 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "neighborhoods.show()",
+      "user": "anonymous",
+      "dateUpdated": "Jul 26, 2018 7:11:48 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "+-----+--------+--------------------+--------------------+-----+--------------------+\n|point|polyline|             polygon|            metadata|valid|               index|\n+-----+--------+--------------------+--------------------+-----+--------------------+\n| null|    null|magellan.Polygon@...|Map(neighborhood ...| true|[[ZOrderCurve(-73...|\n| null|    null|magellan.Polygon@...|Map(neighborhood ...| true|[[ZOrderCurve(-73...|\n| null|    null|magellan.Polygon@...|Map(neighborhood ...| true|[[ZOrderCurve(-74...|\n| null|    null|magellan.Polygon@...|Map(neighborhood ...| true|[[ZOrderCurve(-74...|\n| null|    null|magellan.Polygon@...|Map(neighborhood ...| true|[[ZOrderCurve(-74...|\n| null|    null|magellan.Polygon@...|Map(neighborhood ...| true|[[ZOrderCurve(-73...|\n| null|    null|magellan.Polygon@...|Map(neighborhood ...| true|[[ZOrderCurve(-73...|\n| null|    null|magellan.Polygon@...|Map(neighborhood ...| true|[[ZOrderCurve(-74...|\n| null|    null|magellan.Polygon@...|Map(neighborhood ...| true|[[ZOrderCurve(-74...|\n| null|    null|magellan.Polygon@...|Map(neighborhood ...| true|[[ZOrderCurve(-74...|\n| null|    null|magellan.Polygon@...|Map(neighborhood ...| true|[[ZOrderCurve(-73...|\n| null|    null|magellan.Polygon@...|Map(neighborhood ...| true|[[ZOrderCurve(-74...|\n| null|    null|magellan.Polygon@...|Map(neighborhood ...| true|[[ZOrderCurve(-73...|\n| null|    null|magellan.Polygon@...|Map(neighborhood ...| true|[[ZOrderCurve(-73...|\n| null|    null|magellan.Polygon@...|Map(neighborhood ...| true|[[ZOrderCurve(-73...|\n| null|    null|magellan.Polygon@...|Map(neighborhood ...| true|[[ZOrderCurve(-73...|\n| null|    null|magellan.Polygon@...|Map(neighborhood ...| true|[[ZOrderCurve(-74...|\n| null|    null|magellan.Polygon@...|Map(neighborhood ...| true|[[ZOrderCurve(-73...|\n| null|    null|magellan.Polygon@...|Map(neighborhood ...| true|[[ZOrderCurve(-73...|\n| null|    null|magellan.Polygon@...|Map(neighborhood ...| true|[[ZOrderCurve(-73...|\n+-----+--------+--------------------+--------------------+-----+--------------------+\nonly showing top 20 rows\n\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1532632149944_1854083450",
+      "id": "20180726-190909_1488347177",
+      "dateCreated": "Jul 26, 2018 7:09:09 PM",
+      "dateStarted": "Jul 26, 2018 7:11:48 PM",
+      "dateFinished": "Jul 26, 2018 7:11:49 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%md \n\n#### Joins espaciales",
+      "user": "anonymous",
+      "dateUpdated": "Jul 26, 2018 7:15:02 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "markdown",
+          "editOnDblClick": true
+        },
+        "editorMode": "ace/mode/markdown",
+        "editorHide": true,
+        "tableHide": false
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "HTML",
+            "data": "\u003ch4\u003eJoins espaciales\u003c/h4\u003e\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1532632450587_384270073",
+      "id": "20180726-191410_1701759610",
+      "dateCreated": "Jul 26, 2018 7:14:10 PM",
+      "dateStarted": "Jul 26, 2018 7:15:02 PM",
+      "dateFinished": "Jul 26, 2018 7:15:02 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "val joined \u003d points.join(polygons).where($\"point\" within $\"polygon\")\n\njoined.show()",
+      "user": "anonymous",
+      "dateUpdated": "Jul 26, 2018 7:15:11 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "joined: org.apache.spark.sql.Dataset[org.apache.spark.sql.Row] \u003d [point: point, polygon: polygon]\n+----------------+--------------------+\n|           point|             polygon|\n+----------------+--------------------+\n|Point(0.5, -0.5)|magellan.Polygon@...|\n+----------------+--------------------+\n\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1532632268648_1316022995",
+      "id": "20180726-191108_532434590",
+      "dateCreated": "Jul 26, 2018 7:11:08 PM",
+      "dateStarted": "Jul 26, 2018 7:15:12 PM",
+      "dateFinished": "Jul 26, 2018 7:15:12 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "user": "anonymous",
+      "config": {},
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "jobName": "paragraph_1532632444096_247284140",
+      "id": "20180726-191404_433097459",
+      "dateCreated": "Jul 26, 2018 7:14:04 PM",
       "status": "READY",
-      "errorMessage": "",
       "progressUpdateIntervalMs": 500
     }
   ],
