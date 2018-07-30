@@ -1,0 +1,1092 @@
+{
+  "paragraphs": [
+    {
+      "text": "%md\n\n## Test - twitter\n\nEl objetivo de esta prueba es saber cuales son los barrios de Bogotá en donde se crean más tweets, para esto se usó la API de twitter y se tuvieron en cuanta solo los tweets que contaban con ubicación activada, se recopilaron tweets de el 26/07/18 hasta el 30/07/18. El GeoJson utilizado fue tomado de [john-guerra](https://gist.github.com/john-guerra/ee93225ca2c671b3550d62614f4978f3#file-bogota_cadastral-json).",
+      "user": "anonymous",
+      "dateUpdated": "Jul 30, 2018 2:08:06 PM",
+      "config": {
+        "tableHide": false,
+        "editorSetting": {
+          "language": "markdown",
+          "editOnDblClick": true
+        },
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/markdown",
+        "editorHide": true,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "HTML",
+            "data": "\u003ch2\u003eTest - twitter\u003c/h2\u003e\n\u003cp\u003eEl objetivo de esta prueba es saber cuales son los barrios de Bogotá en donde se crean más tweets, para esto se usó la API de twitter y se tuvieron en cuanta solo los tweets que contaban con ubicación activada, se recopilaron tweets de el 26/07/18 hasta el 30/07/18. El GeoJson utilizado fue tomado de \u003ca href\u003d\"https://gist.github.com/john-guerra/ee93225ca2c671b3550d62614f4978f3#file-bogota_cadastral-json\"\u003ejohn-guerra\u003c/a\u003e.\u003c/p\u003e\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1532957561270_-453492252",
+      "id": "20180725-213831_1032787321",
+      "dateCreated": "Jul 30, 2018 1:32:41 PM",
+      "dateStarted": "Jul 30, 2018 2:08:06 PM",
+      "dateFinished": "Jul 30, 2018 2:08:06 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "import magellan._\nimport org.apache.spark.sql.magellan.dsl.expressions._\n\nimport org.apache.spark.sql.Row\nimport org.apache.spark.sql.functions._\nimport org.apache.spark.sql.types._",
+      "user": "anonymous",
+      "dateUpdated": "Jul 30, 2018 1:38:29 PM",
+      "config": {
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/scala",
+        "results": {},
+        "enabled": true,
+        "editorSetting": {
+          "language": "scala"
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "import magellan._\nimport org.apache.spark.sql.magellan.dsl.expressions._\nimport org.apache.spark.sql.Row\nimport org.apache.spark.sql.functions._\nimport org.apache.spark.sql.types._\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1532957561281_-471575451",
+      "id": "20180724-162534_465505494",
+      "dateCreated": "Jul 30, 2018 1:32:41 PM",
+      "dateStarted": "Jul 30, 2018 1:38:30 PM",
+      "dateFinished": "Jul 30, 2018 1:40:04 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "//El dataset de tweets tiene el siguiente esquema\nval schema \u003d StructType(Array(\n    StructField(\"tweet\", StringType, false),\n    StructField(\"latitude\", DoubleType, false),\n    StructField(\"longitude\", DoubleType, false),\n    StructField(\"url\", StringType, false)))",
+      "user": "anonymous",
+      "dateUpdated": "Jul 30, 2018 1:42:38 PM",
+      "config": {
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/scala",
+        "results": {},
+        "enabled": true,
+        "editorSetting": {
+          "language": "scala"
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "schema: org.apache.spark.sql.types.StructType \u003d StructType(StructField(tweet,StringType,false), StructField(latitude,DoubleType,false), StructField(longitude,DoubleType,false), StructField(url,StringType,false))\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1532957561282_-470421204",
+      "id": "20180724-162616_1710035392",
+      "dateCreated": "Jul 30, 2018 1:32:41 PM",
+      "dateStarted": "Jul 30, 2018 1:41:00 PM",
+      "dateFinished": "Jul 30, 2018 1:41:00 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": " //Se carga el archivo csv en un dataframe\n val tweets \u003d sqlContext.read\n      .format(\"com.databricks.spark.csv\")\n      .option(\"comment\", \"V\")\n      .option(\"mode\", \"DROPMALFORMED\")\n      .schema(schema)\n      .load(\"/files/tweets\")\n      .withColumn(\"point\", \n       point($\"longitude\",$\"latitude\")) //Se añade la columna con la estructura de datos Point\n      .cache()",
+      "user": "anonymous",
+      "dateUpdated": "Jul 30, 2018 1:42:02 PM",
+      "config": {
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/scala",
+        "results": {},
+        "enabled": true,
+        "editorSetting": {
+          "language": "scala"
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "tweets: org.apache.spark.sql.Dataset[org.apache.spark.sql.Row] \u003d [tweet: string, latitude: double ... 3 more fields]\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1532957561283_-470805953",
+      "id": "20180724-162621_1476766059",
+      "dateCreated": "Jul 30, 2018 1:32:41 PM",
+      "dateStarted": "Jul 30, 2018 1:42:02 PM",
+      "dateFinished": "Jul 30, 2018 1:42:12 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "//total de registros cargados\ntweets.count()",
+      "user": "anonymous",
+      "dateUpdated": "Jul 30, 2018 1:42:19 PM",
+      "config": {
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/scala",
+        "results": {},
+        "enabled": true,
+        "editorSetting": {
+          "language": "scala"
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "res11: Long \u003d 11633\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1532957561283_-470805953",
+      "id": "20180724-162855_1885524167",
+      "dateCreated": "Jul 30, 2018 1:32:41 PM",
+      "dateStarted": "Jul 30, 2018 1:42:19 PM",
+      "dateFinished": "Jul 30, 2018 1:42:36 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "//Se carga el GeoJson que contiene los polígonos representantes de cada barrio de Bogotá\nval barrios \u003d sqlContext.read\n      .format(\"magellan\")\n      .option(\"type\", \"geojson\")\n      .load(\"/files/bogota_cadastral.geojson\")\n      .select($\"polygon\", \n       $\"metadata\"(\"scanombre\").as(\"nombre\"))// Se añade una columna de estructuda de datos Polygon\n      .cache()",
+      "user": "anonymous",
+      "dateUpdated": "Jul 30, 2018 2:08:34 PM",
+      "config": {
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/scala",
+        "results": {},
+        "enabled": true,
+        "editorSetting": {
+          "language": "scala"
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "barrios: org.apache.spark.sql.Dataset[org.apache.spark.sql.Row] \u003d [polygon: polygon, nombre: string]\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1532957561284_-472729697",
+      "id": "20180724-162924_1852883305",
+      "dateCreated": "Jul 30, 2018 1:32:41 PM",
+      "dateStarted": "Jul 30, 2018 1:44:15 PM",
+      "dateFinished": "Jul 30, 2018 1:44:16 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "//total barrios\nbarrios.count()",
+      "user": "anonymous",
+      "dateUpdated": "Jul 30, 2018 2:08:39 PM",
+      "config": {
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/scala",
+        "results": {},
+        "enabled": true,
+        "editorSetting": {
+          "language": "scala"
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "res16: Long \u003d 1160\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1532957561284_-472729697",
+      "id": "20180724-163254_289536977",
+      "dateCreated": "Jul 30, 2018 1:32:41 PM",
+      "dateStarted": "Jul 30, 2018 1:44:23 PM",
+      "dateFinished": "Jul 30, 2018 1:44:29 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": " //Se ecuja el join con el predicado within, que genera un arreglo con las columnas de ambos dataframes\n val joined \u003d tweets.join(barrios)\n        .where($\"point\" within $\"polygon\")",
+      "user": "anonymous",
+      "dateUpdated": "Jul 30, 2018 1:45:08 PM",
+      "config": {
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/scala",
+        "results": {},
+        "enabled": true,
+        "editorSetting": {
+          "language": "scala"
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "joined: org.apache.spark.sql.Dataset[org.apache.spark.sql.Row] \u003d [tweet: string, latitude: double ... 5 more fields]\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1532957561285_-473114446",
+      "id": "20180724-163307_287039990",
+      "dateCreated": "Jul 30, 2018 1:32:41 PM",
+      "dateStarted": "Jul 30, 2018 1:45:08 PM",
+      "dateFinished": "Jul 30, 2018 1:45:08 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "//El dataset de tweets contiene tweets de toda colombia (y paises vecinos)\njoined.count()",
+      "user": "anonymous",
+      "dateUpdated": "Jul 30, 2018 2:09:33 PM",
+      "config": {
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/scala",
+        "results": {},
+        "enabled": true,
+        "editorSetting": {
+          "language": "scala"
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "res20: Long \u003d 3188\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1532957561285_-473114446",
+      "id": "20180724-163321_1410574151",
+      "dateCreated": "Jul 30, 2018 1:32:41 PM",
+      "dateStarted": "Jul 30, 2018 1:45:11 PM",
+      "dateFinished": "Jul 30, 2018 1:45:18 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "//Rertorna los barrios y el total de tweets ordenado\njoined\n      .groupBy(\u0027nombre)\n      .count()\n      .orderBy($\"count\".desc).show()",
+      "user": "anonymous",
+      "dateUpdated": "Jul 30, 2018 2:10:00 PM",
+      "config": {
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/scala",
+        "results": {},
+        "enabled": true,
+        "editorSetting": {
+          "language": "scala"
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "+--------------------+-----+\n|              nombre|count|\n+--------------------+-----+\n|          SANTA INES| 1299|\n|           EL LISTON|  167|\n|   CAMPO EUCARISTICO|   82|\n|         PROVIVIENDA|   74|\n|           EL RETIRO|   58|\n|              CAMPIN|   48|\n|AEROPUERTO EL DORADO|   45|\n|CENTRO ADMINISTRA...|   44|\n|           LAS AGUAS|   36|\n|         LA CATEDRAL|   34|\n|         CHICO NORTE|   29|\n|         ESPARTILLAL|   29|\n|CHICO NORTE II SE...|   29|\n|     JARDIN BOTANICO|   27|\n|     ACACIAS USAQUEN|   26|\n|          CAMPANELLA|   26|\n|      QUINTA CAMACHO|   25|\n|         VILLA ELISA|   24|\n|   CHAPINERO CENTRAL|   24|\n|           LA CABANA|   23|\n+--------------------+-----+\nonly showing top 20 rows\n\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1532957561286_-471960199",
+      "id": "20180724-163337_290235117",
+      "dateCreated": "Jul 30, 2018 1:32:41 PM",
+      "dateStarted": "Jul 30, 2018 1:45:54 PM",
+      "dateFinished": "Jul 30, 2018 1:46:02 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "//Ya que .show() no muestra algunos datos completamnete se crearán vistas para hacer consultas sql las que permiten una mejor visualización\ntweets.createOrReplaceTempView(\"tweets\")\nbarrios.createOrReplaceTempView(\"barrios\")\njoined.createOrReplaceTempView(\"joined\")",
+      "user": "anonymous",
+      "dateUpdated": "Jul 30, 2018 1:47:46 PM",
+      "config": {
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/scala",
+        "results": {},
+        "enabled": true,
+        "editorSetting": {
+          "language": "scala"
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": []
+      },
+      "apps": [],
+      "jobName": "paragraph_1532957561286_-471960199",
+      "id": "20180724-163505_1352158345",
+      "dateCreated": "Jul 30, 2018 1:32:41 PM",
+      "dateStarted": "Jul 30, 2018 1:47:46 PM",
+      "dateFinished": "Jul 30, 2018 1:47:47 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "tweets.printSchema()",
+      "user": "anonymous",
+      "dateUpdated": "Jul 30, 2018 1:47:52 PM",
+      "config": {
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/scala",
+        "results": {},
+        "enabled": true,
+        "editorSetting": {
+          "language": "scala"
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "root\n |-- tweet: string (nullable \u003d true)\n |-- latitude: double (nullable \u003d true)\n |-- longitude: double (nullable \u003d true)\n |-- url: string (nullable \u003d true)\n |-- point: point (nullable \u003d false)\n\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1532957561287_-472344948",
+      "id": "20180724-165652_695958056",
+      "dateCreated": "Jul 30, 2018 1:32:41 PM",
+      "dateStarted": "Jul 30, 2018 1:47:52 PM",
+      "dateFinished": "Jul 30, 2018 1:47:52 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "barrios.printSchema()",
+      "user": "anonymous",
+      "dateUpdated": "Jul 30, 2018 1:47:56 PM",
+      "config": {
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/scala",
+        "results": {},
+        "enabled": true,
+        "editorSetting": {
+          "language": "scala"
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "root\n |-- polygon: polygon (nullable \u003d true)\n |-- nombre: string (nullable \u003d true)\n\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1532957561288_-474268693",
+      "id": "20180724-165956_1314278865",
+      "dateCreated": "Jul 30, 2018 1:32:41 PM",
+      "dateStarted": "Jul 30, 2018 1:47:56 PM",
+      "dateFinished": "Jul 30, 2018 1:47:57 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "joined.printSchema()",
+      "user": "anonymous",
+      "dateUpdated": "Jul 30, 2018 1:48:00 PM",
+      "config": {
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/scala",
+        "results": {},
+        "enabled": true,
+        "editorSetting": {
+          "language": "scala"
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "root\n |-- tweet: string (nullable \u003d true)\n |-- latitude: double (nullable \u003d true)\n |-- longitude: double (nullable \u003d true)\n |-- url: string (nullable \u003d true)\n |-- point: point (nullable \u003d false)\n |-- polygon: polygon (nullable \u003d true)\n |-- nombre: string (nullable \u003d true)\n\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1532957561288_-474268693",
+      "id": "20180724-170008_1350415361",
+      "dateCreated": "Jul 30, 2018 1:32:41 PM",
+      "dateStarted": "Jul 30, 2018 1:48:00 PM",
+      "dateFinished": "Jul 30, 2018 1:48:00 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%spark2.sql\n\nselect * from tweets limit 10",
+      "user": "anonymous",
+      "dateUpdated": "Jul 30, 2018 1:48:05 PM",
+      "config": {
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/sql",
+        "results": {
+          "0": {
+            "graph": {
+              "mode": "table",
+              "height": 300.0,
+              "optionOpen": false
+            },
+            "helium": {}
+          }
+        },
+        "enabled": true,
+        "editorSetting": {
+          "language": "sql"
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TABLE",
+            "data": "tweet\tlatitude\tlongitude\turl\tpoint\n[\u0027Sensacional presentación de #LaReinaDeLaMusicaPopular 👑 @arelyshenao en #LaCasaDeUno con @radiounobogota // felices… https://t.co/JHgbdqPhxX\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1022992083345465350\tPoint(-74.0794, 4.5997)\n[\u0027@Manito___  En mi casa porque?\u0027]\t4.6358733\t-74.1444018\thttps://twitter.com/statuses/1022992095232053251\tPoint(-74.1444018, 4.6358733)\n[\u0027💥 ═══ ⭐🌟⭐═══ ═══n           *ORACIÓN* n        *DE LA NOCHE*nn_Señor mío y Dios mío, te alabo y te bendigo por esta… https://t.co/kdYlWnwL06\u0027]\t4.85\t-74.2667\thttps://twitter.com/statuses/1022992123883388928\tPoint(-74.2667, 4.85)\n[\u0027Empieza el día radiante, con una sonrisa y las mejores ideas, tan radiantes como el sol en las islas griegas de Del… https://t.co/knLEfufDzd\u0027]\t11.00055441\t-74.81187344\thttps://twitter.com/statuses/1022992150986981377\tPoint(-74.81187344, 11.00055441)\n[\u0027•Desconocido #9 #unknown #desconocido #silla #park #parque #photography #chill \\n•\\n•\\n•\\n•\\n•\\n•\\n•\\n•\\n•\\n•\\n•\\n•\\n@huevarda_… https://t.co/A3bk4O4Pxe\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1022992180519030786\tPoint(-74.0794, 4.5997)\n[\u0027Empieza el día radiante, con una sonrisa y las mejores ideas, tan radiantes como el sol en las islas griegas de Del… https://t.co/JviqKJF6iy\u0027]\t11.00055441\t-74.81187344\thttps://twitter.com/statuses/1022992182725275648\tPoint(-74.81187344, 11.00055441)\n[\u0027Empieza el día radiante, con una sonrisa y las mejores ideas, tan radiantes como el sol en las islas griegas de Del… https://t.co/6CTpgMqC0k\u0027]\t11.00055441\t-74.81187344\thttps://twitter.com/statuses/1022992198453932035\tPoint(-74.81187344, 11.00055441)\n[\u0027Empieza el día radiante, con una sonrisa y las mejores ideas, tan radiantes como el sol en las islas griegas de Del… https://t.co/rWCUP2T1tx\u0027]\t11.00055441\t-74.81187344\thttps://twitter.com/statuses/1022992227218481152\tPoint(-74.81187344, 11.00055441)\n[\u0027Empieza el día radiante, con una sonrisa y las mejores ideas, tan radiantes como el sol en las islas griegas de Del… https://t.co/uWx67hW8Yh\u0027]\t11.00055441\t-74.81187344\thttps://twitter.com/statuses/1022992248387055617\tPoint(-74.81187344, 11.00055441)\n[\u0027Empieza el día radiante, con una sonrisa y las mejores ideas, tan radiantes como el sol en las islas griegas de Del… https://t.co/apJu36cY87\u0027]\t11.00055441\t-74.81187344\thttps://twitter.com/statuses/1022992269799055361\tPoint(-74.81187344, 11.00055441)\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1532957561291_-473883944",
+      "id": "20180724-165718_1750649860",
+      "dateCreated": "Jul 30, 2018 1:32:41 PM",
+      "dateStarted": "Jul 30, 2018 1:48:05 PM",
+      "dateFinished": "Jul 30, 2018 1:48:06 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%spark2.sql\n\nselect * from barrios limit 10",
+      "user": "anonymous",
+      "dateUpdated": "Jul 30, 2018 1:48:17 PM",
+      "config": {
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/sql",
+        "results": {},
+        "enabled": true,
+        "editorSetting": {
+          "language": "sql"
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TABLE",
+            "data": "polygon\tnombre\nmagellan.Polygon@661ca258\tLOS LAURELES\nmagellan.Polygon@f3555fb1\tLA MAGDALENA\nmagellan.Polygon@c0b2bed4\tEL UVAL RURAL\nmagellan.Polygon@a9c292f\tPALO BLANCO\nmagellan.Polygon@e47cd6da\tPOTRERILLO\nmagellan.Polygon@d07f2a47\tBANCO CENTRAL\nmagellan.Polygon@f56c42ce\tHOYA TEUSACA\nmagellan.Polygon@655a7981\tLA ESTANZUELA\nmagellan.Polygon@7d2b45ce\tLAS NIEVES\nmagellan.Polygon@8666c834\tARBORIZADORA ALTA\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1532957561292_-475807688",
+      "id": "20180724-170022_1266182066",
+      "dateCreated": "Jul 30, 2018 1:32:41 PM",
+      "dateStarted": "Jul 30, 2018 1:48:18 PM",
+      "dateFinished": "Jul 30, 2018 1:48:18 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%spark2.sql\n\nselect * from joined limit 10",
+      "user": "anonymous",
+      "dateUpdated": "Jul 30, 2018 1:48:25 PM",
+      "config": {
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/sql",
+        "results": {},
+        "enabled": true,
+        "editorSetting": {
+          "language": "sql"
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TABLE",
+            "data": "tweet\tlatitude\tlongitude\turl\tpoint\tpolygon\tnombre\n[\u0027Sensacional presentación de #LaReinaDeLaMusicaPopular 👑 @arelyshenao en #LaCasaDeUno con @radiounobogota // felices… https://t.co/JHgbdqPhxX\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1022992083345465350\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@360a20c5\tSANTA INES\n[\u0027@Manito___  En mi casa porque?\u0027]\t4.6358733\t-74.1444018\thttps://twitter.com/statuses/1022992095232053251\tPoint(-74.1444018, 4.6358733)\tmagellan.Polygon@dd80e6bc\tCASTILLA\n[\u0027•Desconocido #9 #unknown #desconocido #silla #park #parque #photography #chill \\n•\\n•\\n•\\n•\\n•\\n•\\n•\\n•\\n•\\n•\\n•\\n•\\n@huevarda_… https://t.co/A3bk4O4Pxe\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1022992180519030786\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@7a8203de\tSANTA INES\n\"[\"\"I\u0027m at Universidad Católica De Colombia Nuevo Edificio https://t.co/sks0VlxQPr\"\"]\"\t4.63445658\t-74.06585208\thttps://twitter.com/statuses/1022992950622658560\tPoint(-74.06585208, 4.63445658)\tmagellan.Polygon@6d8ff935\tMARLY\n[\u0027Con mi grupo de trabajo ! Y mi equipo ganador ! #Sebasrodas #Jordan #NestorLozano #JohnGuevara @pabon88 !… https://t.co/9PWrZXefvc\u0027]\t4.70123891\t-74.04141264\thttps://twitter.com/statuses/1022993035192422400\tPoint(-74.04141264, 4.70123891)\tmagellan.Polygon@afbb31c5\tSANTA BARBARA CENTRAL\n[\u0027Sigue nuestras notas de liderazgo en nuestro blog: https://t.co/mTcXRHftF4 | Para consultoria: +57 300 806 2384.… https://t.co/c2LimlhsBO\u0027]\t4.58679865\t-74.10567999\thttps://twitter.com/statuses/1022993130721882112\tPoint(-74.10567999, 4.58679865)\tmagellan.Polygon@f8f10330\tRESTREPO OCCIDENTAL\n[\u0027Uno siempre regresa a los lugares donde fue feliz y con las personas que te hacen feliz... Te amo @srranosntamaria… https://t.co/RSxKpgOTCW\u0027]\t4.64550741\t-74.06198897\thttps://twitter.com/statuses/1022993145129127936\tPoint(-74.06198897, 4.64550741)\tmagellan.Polygon@2a8c8b5a\tCHAPINERO CENTRAL\n[\u0027Sin descanso hasta la cima. \\n\\n#vierness\\n#viernes #viernesdrumba  #venezolanosenguatemala #viernes✌ #trabajo💪… https://t.co/cMfBa5KUEY\u0027]\t4.61508235\t-74.07262426\thttps://twitter.com/statuses/1022993769237499909\tPoint(-74.07262426, 4.61508235)\tmagellan.Polygon@5012f163\tLA ALAMEDA\n[\u0027#9 #photography  #chill #vegetation #nenufar #estanque #pond #plant #plantas en Bogotá, Colombia https://t.co/DNXDVHSpLi\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1022993800526888960\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@486a6d64\tSANTA INES\n[\u0027Feliz noche de viernes. \\n#AeropuertoElDorado #ElDoradoInternationalAirport #TorreDeControl #ControlTower #ATCView… https://t.co/U2pz1pcE2q\u0027]\t4.69900136\t-74.14365968\thttps://twitter.com/statuses/1022993832261050368\tPoint(-74.14365968, 4.69900136)\tmagellan.Polygon@669e0d1f\tAEROPUERTO EL DORADO\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1532957561292_-475807688",
+      "id": "20180724-165743_169180450",
+      "dateCreated": "Jul 30, 2018 1:32:41 PM",
+      "dateStarted": "Jul 30, 2018 1:48:25 PM",
+      "dateFinished": "Jul 30, 2018 1:48:26 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%spark2.sql\n\n-- Top 10 vecindarios de la ciudad de Nueva York tienen los abordajes más frecuentes.\nselect nombre,count(*) as count from joined group by nombre order by count desc limit 10",
+      "user": "anonymous",
+      "dateUpdated": "Jul 30, 2018 1:48:41 PM",
+      "config": {
+        "colWidth": 6.0,
+        "editorMode": "ace/mode/sql",
+        "results": {
+          "0": {
+            "graph": {
+              "mode": "table",
+              "height": 352.0,
+              "optionOpen": false
+            }
+          }
+        },
+        "enabled": true,
+        "editorSetting": {
+          "language": "sql"
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TABLE",
+            "data": "nombre\tcount\nSANTA INES\t1299\nEL LISTON\t167\nCAMPO EUCARISTICO\t82\nPROVIVIENDA\t74\nEL RETIRO\t58\nCAMPIN\t48\nAEROPUERTO EL DORADO\t45\nCENTRO ADMINISTRATIVO\t44\nLAS AGUAS\t36\nLA CATEDRAL\t34\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1532957561293_-476192437",
+      "id": "20180724-170129_2076544962",
+      "dateCreated": "Jul 30, 2018 1:32:41 PM",
+      "dateStarted": "Jul 30, 2018 1:48:41 PM",
+      "dateFinished": "Jul 30, 2018 1:48:48 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%spark2.sql\n\n-- Top 10 vecindarios de la ciudad de Nueva York tienen los abordajes más frecuentes.\nselect nombre,count(*) as count from joined group by nombre order by count desc limit 10",
+      "user": "anonymous",
+      "dateUpdated": "Jul 30, 2018 1:54:46 PM",
+      "config": {
+        "editorSetting": {
+          "language": "sql"
+        },
+        "colWidth": 6.0,
+        "editorMode": "ace/mode/sql",
+        "editorHide": true,
+        "results": {
+          "0": {
+            "graph": {
+              "mode": "pieChart",
+              "height": 426.0,
+              "optionOpen": false
+            },
+            "helium": {}
+          }
+        },
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TABLE",
+            "data": "nombre\tcount\nSANTA INES\t1299\nEL LISTON\t167\nCAMPO EUCARISTICO\t82\nPROVIVIENDA\t74\nEL RETIRO\t58\nCAMPIN\t48\nAEROPUERTO EL DORADO\t45\nCENTRO ADMINISTRATIVO\t44\nLAS AGUAS\t36\nLA CATEDRAL\t34\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1532957561293_-476192437",
+      "id": "20180724-175607_218053105",
+      "dateCreated": "Jul 30, 2018 1:32:41 PM",
+      "dateStarted": "Jul 30, 2018 1:51:12 PM",
+      "dateFinished": "Jul 30, 2018 1:51:16 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%spark2.sql\n\nselect * from joined where nombre\u003d\"SANTA INES\"",
+      "user": "anonymous",
+      "dateUpdated": "Jul 30, 2018 1:54:31 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "sql"
+        },
+        "editorMode": "ace/mode/sql"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TABLE",
+            "data": "tweet\tlatitude\tlongitude\turl\tpoint\tpolygon\tnombre\n[\u0027Sensacional presentación de #LaReinaDeLaMusicaPopular 👑 @arelyshenao en #LaCasaDeUno con @radiounobogota // felices… https://t.co/JHgbdqPhxX\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1022992083345465350\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@90438a32\tSANTA INES\n[\u0027•Desconocido #9 #unknown #desconocido #silla #park #parque #photography #chill \\n•\\n•\\n•\\n•\\n•\\n•\\n•\\n•\\n•\\n•\\n•\\n•\\n@huevarda_… https://t.co/A3bk4O4Pxe\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1022992180519030786\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@5946ecc9\tSANTA INES\n[\u0027#9 #photography  #chill #vegetation #nenufar #estanque #pond #plant #plantas en Bogotá, Colombia https://t.co/DNXDVHSpLi\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1022993800526888960\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@7738254e\tSANTA INES\n[\u0027“No temas renunciar a lo bueno para ir por lo grande, si te da miedo no importa hazlo con miedo pero hazlo, la vida… https://t.co/eBQVqmhhC4\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1022994293852655616\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@ce2a4bb\tSANTA INES\n[\u0027360° Colection de Perry Ellis 💞 Mujer\\nNota de olor floral\\n\\n💖 💯%originales\\n💖 Fragancias importadas\\n💖 Garantizadas\\n💖… https://t.co/2Qai7Ezfyc\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1022994509343465473\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@8369ff09\tSANTA INES\n[\u0027Acaba de publicar una foto en Bogotá, Colombia https://t.co/vEQBYihY8r\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1022995015205830656\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@ab20b464\tSANTA INES\n[\u0027360° Coral de Perry Ellis 💞 Mujer\\nNotas de olor esencias aromáticas y florales\\n\\n💖 💯%originales\\n💖 Fragancias importa… https://t.co/817BO6qi8o\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1022995021279227905\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@c9581e00\tSANTA INES\n[\u0027MatiasBatman 🐶 en Bogotá, Colombia https://t.co/zoBMswlMRr\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1022995183326175232\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@8ab201cf\tSANTA INES\n[\u0027360° Purple de Perry Ellis 💞 Mujer\\nNota de olor floral\\n\\n💖 💯%originales\\n💖 Fragancias importadas\\n💖 Garantizadas\\n💖 Pre… https://t.co/vmOs8wcltr\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1022995361785364480\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@9a990428\tSANTA INES\n[\u0027Luna bella, luna sangrienta. en Bogotá, Colombia https://t.co/ntBrxTYPs0\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1022995734709379077\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@fb0f860\tSANTA INES\n[\u0027Perry Ellis de Perry Ellis 💞 Mujer 🔜 edición limitada 🔚\\nNota de olor amaderada\\n\\n💖 💯%originales\\n💖 Fragancias importa… https://t.co/8BNDchprsW\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1022995884051779584\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@3e0107f3\tSANTA INES\n[\u0027360° pink de Perry Ellis 💞 Mujer\\nNota de olor floral\\n\\n💖 💯%originales\\n💖 Fragancias importadas\\n💖 Garantizadas\\n💖 Pregu… https://t.co/QCbvQ6ggfB\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1022996086292656129\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@6283850\tSANTA INES\n[\u0027La #lunadesangre de hoy! en Bogotá, Colombia https://t.co/QZk1R57fDr\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1022996159227297792\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@68f25126\tSANTA INES\n[\u002718 Sensual de Perry Ellis 💞 Mujer\\nNota de olor floral\\n\\n💖 💯%originales\\n💖 Fragancias importadas\\n💖 Garantizadas\\n💖 Preg… https://t.co/h0P4QGsTuZ\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1022996375582191616\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@93646345\tSANTA INES\n[\u002718 de Perry Ellis 💞 Mujer\\nNota de olor floral\\n\\n💖 💯%originales\\n💖 Fragancias importadas\\n💖 Garantizadas\\n💖 Pregunta por… https://t.co/1uMlYa2uGL\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1022997053591441408\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@48c113a4\tSANTA INES\n[\u0027Luna Luna !!! 🌑🌑 en Bogotá, Colombia https://t.co/6MP0Llrc0p\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1022997095891001344\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@c7409c8\tSANTA INES\n[\u0027Perry for Her de Perry Ellis 💞 Mujer\\nNota de olor floral\\n\\n💖 💯%originales\\n💖 Fragancias importadas\\n💖 Garantizadas\\n💖 P… https://t.co/annhBDRemu\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1022997344231383040\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@9eff51d2\tSANTA INES\n[\u0027F de Perry Ellis 💞 Mujer\\nNota de olor floral\\n\\n💖 💯%originales\\n💖 Fragancias importadas\\n💖 Garantizadas\\n💖 Pregunta por… https://t.co/1t5V2xFMDv\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1022997780183359493\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@22110be5\tSANTA INES\n[\u0027En el día mundial del perro callejero les presento a#katy ella representa la lealtad el amor y el agradecimiento to… https://t.co/d8QqbaNk9I\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1022998478870462464\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@ed1b3c0d\tSANTA INES\n[\u0027#fullmoon #lunallena #naturegifts @ Bogotá, Colombia https://t.co/Czs02oMqLF\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1022998722118963200\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@7488317c\tSANTA INES\n[\u0027Woman de Perry Ellis \\nNota de olor esencias aromáticas\\n\\n💖 💯%originales\\n💖 Fragancias importadas\\n💖 Garantizadas\\n💖 Pre… https://t.co/73qON03DSY\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1022999586263031808\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@4f8814d6\tSANTA INES\n[\u0027Acaba de publicar una foto en Bogotá, Colombia https://t.co/xEVUsRmCxI\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1022999643813175296\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@705ea5b6\tSANTA INES\n[\u0027Acaba de publicar una foto en Bogotá, Colombia https://t.co/iwZ4bMx2QQ\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1022999838382645249\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@43dbb912\tSANTA INES\n[\u0027Portafolio Elite de Perry Ellis 💞 mujer\\nNota de olor Floral\\n\\n💖 💯%originales\\n💖 Fragancias importadas\\n💖 Garantizadas… https://t.co/qjvtfqwX51\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1022999891218333696\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@16cb27ba\tSANTA INES\n[\u0027Acaba de publicar una foto en Bogotá, Colombia https://t.co/5K1fyPq0L2\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1022999900647251970\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@41ddb4d8\tSANTA INES\n[\u0027Harry Potter cake  #thecandymanenaccion #amomitrabajo en Bogotá, Colombia https://t.co/szEswvOMb1\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023000024618135552\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@e1761c67\tSANTA INES\n[\u0027Reverse de Perry Ellis 💞 Mujer\\nNota de olor floral\\n\\n💖 💯%originales\\n💖 Fragancias importadas\\n💖 Garantizadas\\n💖 Pregunt… https://t.co/QyfHWB6rTD\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023000194437263362\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@67e0e7a8\tSANTA INES\n[\u0027360° Black de Perry Ellis 💞 Mujer\\nNota de olor floral\\n\\n💖 💯%originales\\n💖 Fragancias importadas\\n💖 Garantizadas\\n💖 Preg… https://t.co/Evc93Z3khd\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023001028046856198\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@fe6ea298\tSANTA INES\n[\u0027360° White de Perry Ellis 💞 Mujer\\nNota de olor floral\\n\\n💖 💯%originales\\n💖 Fragancias importadas\\n💖 Garantizadas\\n💖 Preg… https://t.co/DuNxFxMul0\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023001079850704896\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@fa789ec\tSANTA INES\n[\u0027La luna y Marte! 😍 en Bogotá, Colombia https://t.co/xfiz7twLM1\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023001084669911040\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@2ed1b281\tSANTA INES\n[\u0027360° Red de Perry Ellis 💞 Mujer\\nNota de olor floral\\n\\n💖 💯%originales\\n💖 Fragancias importadas\\n💖 Garantizadas\\n💖 Pregun… https://t.co/wjQDYQaDTN\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023001436068540416\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@120d5b10\tSANTA INES\n[\u0027360° de Perry Ellis 💞 Mujer\\nNota de olor Floral\\n\\n💖 💯%originales\\n💖 Fragancias importadas\\n💖 Garantizadas\\n💖 Pregunta p… https://t.co/YeM7dh6gAq\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023001717888167937\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@3660d64b\tSANTA INES\n[\u0027Portafolio de Perry Ellis 💞 Mujer\\nNota de olor floral\\n\\n💖 💯%originales\\n💖 Fragancias importadas\\n💖 Garantizadas\\n💖 Preg… https://t.co/W0yVxjLPTe\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023001986000609281\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@93aa6292\tSANTA INES\n[\u0027América de Perry Ellis 💞 Mujer\\nNotas de olor citricas y frutales\\n\\n💖 💯%originales\\n💖 Fragancias importadas\\n💖 Garantiz… https://t.co/Is5xCuEJnr\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023002286652641281\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@63ee59e5\tSANTA INES\n[\u0027Frase del #Día, Filosofando Con El Monje, #menciona a tu orgasmo favorito. .nnhttps://t.co/1QayxR520Y. .… https://t.co/Y7UecYhIhW\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023002293858430976\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@fa01e0f8\tSANTA INES\n[\u0027Luna Bogotana en Bogotá, Colombia https://t.co/KYgOI2HJKt\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023003122413780992\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@ea8b09fd\tSANTA INES\n[\u0027Nuevos integrantes. #guardianesdelagalaxia #guardiansofthegalaxy cortesía: moni_lrb #marvel #robocop en Bogotá, Col… https://t.co/IK0G7hK3ec\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023003274188865545\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@2bc08ce8\tSANTA INES\n[\u0027#bogota en #azul 💙 ella en su caos y soledad. Así perfecta. #atardecer #atardecerRolo #sunset #sunsetblue #blue… https://t.co/YebnSYmAjn\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023003987057016832\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@aeec9ff7\tSANTA INES\n\"[\"\"Pony\u0027s de Ralph Lauren 💞 Mujer\\nNotas de olor cítricas y frutales\\n\\n💖 💯%originales\\n💖 Fragancias importadas\\n💖 Garantiz… https://t.co/kpvth4nrG5\"\"]\"\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023005085570400257\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@4271ad85\tSANTA INES\n[\u0027Ralph de Ralph Lauren 💞 Mujer\\nNotas de olor Cítricas y frutales\\n\\n💖 💯%originales\\n💖 Fragancias importadas\\n💖 Garantiza… https://t.co/O6tNrvgWsR\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023005585720193031\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@62c62795\tSANTA INES\n[\u0027Romance Midnigth de Ralph Lauren 💞 Mujer 🆕\\nNota de olor floral\\n\\n💖 💯%originales\\n💖 Fragancias importadas\\n💖 Garantizad… https://t.co/7H916oQ0yL\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023005866264547334\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@74389ab5\tSANTA INES\n[\u0027Gracias mi amada esposa moni_lrb por hacerme muy feliz con este súper detalle. Siempre me sorprendes. #superman #dc… https://t.co/MRuNG0j9D1\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023005921449005056\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@bc920703\tSANTA INES\n[\u0027Romance de Ralph Lauren 💞 Mujer\\nNota de olor floral\\n\\n💖 💯%originales\\n💖 Fragancias importadas\\n💖 Garantizadas\\n💖 Pregun… https://t.co/fxIfErJ4o6\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023006171135913984\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@aced0cb\tSANTA INES\n[\u0027#viernesdeganarseguidores #felizviernes #buenclima #venezolano en Bogotá, Colombia https://t.co/cWHvbPcKZC\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023007666975776771\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@ecfcb9da\tSANTA INES\n[\u0027Horas Iver Heels de Revlon \\nNota de olor floral\\n\\n💖 💯%originales\\n💖 Fragancias importadas\\n💖 Garantizadas\\n💖 Pregunta p… https://t.co/6gRZ6lBy0s\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023007711947104256\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@c9470435\tSANTA INES\n[\u0027Un regalo más de Cumple... en Bogotá, Colombia https://t.co/gvNaFHGwvR\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023007801721987072\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@eec30f4b\tSANTA INES\n[\u0027Esto también es #Bogota en Bogotá, Colombia https://t.co/ZTSAyHg2uc\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023007838514409472\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@bac2b2b5\tSANTA INES\n[\u0027Mucha guapurita !!! en Bogotá, Colombia https://t.co/ajjJD8tF4h\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023007888544083969\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@3d9c262c\tSANTA INES\n[\u0027Arte en las paredes ledania \\n\\n #bogotameencanta #bogotameenamora #streetphotography #streetartbogota… https://t.co/t1Z7XSnWDO\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023008438341853184\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@c26e04d\tSANTA INES\n[\u0027Charlie Blue de Revlon 💞 Mujer\\nNota de olor floral\\n\\n💖 💯%originales\\n💖 Fragancias importadas\\n💖 Garantizadas\\n💖 Pregunt… https://t.co/uptt9hafq7\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023008454590570496\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@f3ccf36f\tSANTA INES\n[\u0027Quiero agradecer a DIZEIRA por una excelente camiseta, de alta calidad y excelente diseño nluta e dança ao som do… https://t.co/SXsNyxz3RZ\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023008521779113984\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@b578f94d\tSANTA INES\n[\u0027Acaba de publicar una foto en Bogotá, Colombia https://t.co/IEbMOIHccI\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023008693430829056\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@3c0206cf\tSANTA INES\n[\u0027Hoy 🎉 Dios se exalta en medio de la alabanza de su pueblo #untoquedelmaestro buena alett.frias oscontreras84 alx_me… https://t.co/Zj5FeTimhG\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023009386732703744\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@97daaef8\tSANTA INES\n[\u0027Logotipo de heladeria en Bogota, limpio y creativo #deseñograficocolombiano #graphicdesign #diseñografico en Bogotá… https://t.co/Iiqz46YLKx\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023009852547915777\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@ca036f6c\tSANTA INES\n[\u0027Termos de aluminio con Rapaces en Colombia otra opción para olvidar las botellas plásticas.\\n#avescolombia #aves… https://t.co/XJY7NS4Dld\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023011050004914177\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@eb886ef8\tSANTA INES\n[\u0027De cumple con mi bebés en Bogotá, Colombia https://t.co/NzmszMyVJO\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023011083873918976\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@d0e60a0d\tSANTA INES\n[\u0027🌈n#Bogotá #Rainbow @ Bogotá, Colombia https://t.co/9Y8G1hwsLO\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023011484413161472\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@c4864e19\tSANTA INES\n[\u0027The force be with me! @starwars #starwars @ Bogotá, Colombia https://t.co/7Pa5aJonAC\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023011945761447936\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@327ffa50\tSANTA INES\n[\u0027Jajajajaj ¿quien tiene un amigo así? @ Bogotá, Colombia https://t.co/4FLEAGepML\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023012018381565953\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@31010acb\tSANTA INES\n[\u0027Las emociones. las emociones siempre te harán sentir y hacer cosas increíbles, inimaginables pero también te pueden… https://t.co/ueXrxijyH2\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023013290191015936\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@ed3934f9\tSANTA INES\n[\u0027#STOP Ella no solo es #lamasdelviernes, también es nuestra próxima invitada. Cuántos likes para @smilelopez?… https://t.co/fCTciWKphk\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023013672279527426\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@e526482f\tSANTA INES\n[\u0027Cielo #Bogotádivina #postalesbogotanas en Bogotá, Colombia https://t.co/Hoseq5mlLL\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023013784556896256\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@c9de318f\tSANTA INES\n[\u0027En el próximo video, les presentaré a lunes festivo, una inteligencia artificial que me ayudará a ganar en… https://t.co/GrAjmeXkCC\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023015440883376129\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@3ecbdec7\tSANTA INES\n[\u0027Acaba de publicar una foto en Bogotá, Colombia https://t.co/EDF606sKkM\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023015474362298369\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@92b2418b\tSANTA INES\n[\u0027El eclipse se pone en marcha...🌔Bogotá 7:15pm #Picofthenight #Eclipse 🌙 en Bogotá, Colombia https://t.co/VuvT9k6ivx\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023015937371525122\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@708e528c\tSANTA INES\n[\u0027Mas que un grupo una excelente compañia de trabajo... Productores de exito! en Bogotá, Colombia https://t.co/UemU2DO2xj\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023016408203124737\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@5de04c32\tSANTA INES\n[\u0027Clarinetes ! Siempre y si me la sé hasta las canto! 🤔🤔😂😂🙊🙊nn#yotas en Bogotá, Colombia https://t.co/Nzayb87yIf\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023016989059674112\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@900e4865\tSANTA INES\n[\u0027Como no quererlo!! cantando estrellita y una de su autoría 🤣🤣😍 @ Bogotá, Colombia https://t.co/3Wp0EEtO6e\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023017131401564160\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@2955c2b\tSANTA INES\n[\u0027#Repost @rogeryerena with get_repostn・・・nNo te lo puedes perder, no dejes para mañana lo que puedes hacer el #05Ago… https://t.co/ZWs7fFB9J3\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023017157737627649\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@c1ee0636\tSANTA INES\n[\u0027Motivo de unión ! De fiesta ! De amigos ! en Bogotá, Colombia https://t.co/jjaH9zfB1Q\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023017433659932674\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@3eb75fab\tSANTA INES\n[\u0027Colega y compañera de batallas mil bendiciones en Bogotá, Colombia https://t.co/H8eT84v4TN\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023018029251284998\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@6338d91\tSANTA INES\n[\u0027La mejor noche de viernes... solo amort 💕 love is in the air 💞\\n#momlove #momlife #catlover #felizenforma #happy… https://t.co/NztPMUZZLH\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023020624585740288\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@134156dd\tSANTA INES\n[\u0027Orgullos de tu logro, la sociedad hoy te abre las puertas con respeto y tu inicias una gran profesión aportando a l… https://t.co/0LOjiIuVDN\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023021577842114560\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@f8dbbf57\tSANTA INES\n[\u0027💩💩 en Bogotá, Colombia https://t.co/yeGVQxkHXB\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023021622259798016\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@1234ba3d\tSANTA INES\n[\u0027Se siente tan bien todo lo que hace mal, y contigo nunca es suficiente 🎶🎵 en Bogotá, Colombia https://t.co/2P0ffvUqyb\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023023266590408704\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@1afab951\tSANTA INES\n[\u0027Estas foticos fueron hace tres años en el eclipse de luna que se pudo ver en Colombia, espero les guste y un saludo… https://t.co/pb6B5uS6fC\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023023282105114624\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@876bfde9\tSANTA INES\n[\u0027El poder... 😞😒 en Bogotá, Colombia https://t.co/yFFVBuErG8\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023023668681736193\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@499f8563\tSANTA INES\n[\u0027•\\n•\\n•\\n\\nQue todo siga como tiene que seguir que la vida es una aventura así  que ríe cuando tengas que reír que llor… https://t.co/xBooAhSdDR\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023024918152327168\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@cfeb63ad\tSANTA INES\n[\u0027🎬🎥 Un gran día de rodaje  para todos .... Gracias  alasdecaracol @HerneyLuna y todo el equipo 💪💪 #TheShowGirl🔝💯 %… https://t.co/lBOa1MZnIM\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023025114743492608\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@6bdf3048\tSANTA INES\n[\u0027Viernes Al Aireeeeee en Fox Sports Radio con toda la actitud. El Bombardero @elbombardero72 en modo… https://t.co/PcdI5hTFrB\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023025677350498304\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@f0f41bfd\tSANTA INES\n[\u0027Cada tanto, logramos un estado de sorpresa y dramatismo superior #InstaPerro #ViernesDeSeñorDeMiEdad en Bogotá, Col… https://t.co/vsHFKDgxsV\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023025748490313735\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@f7f9755d\tSANTA INES\n[\u0027Haciendo oficio en Bogotá, Colombia https://t.co/slA9ryLu6W\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023025770942357505\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@21821797\tSANTA INES\n[\u0027There’s nothing to be afraid of.n#Potd #DoIt #TGIFn308/365📷. @ Bogotá, Colombia https://t.co/j3MfmHaKgn\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023026025616289792\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@fa02c234\tSANTA INES\n[\u0027Acaba de publicar una foto en Bogotá, Colombia https://t.co/GAb6PDCDog\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023026295637254144\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@45aafa86\tSANTA INES\n\"[\"\"It\u0027s not necessary to go out with someone to have a date. My first date with me. This day was a beautiful and amazi… https://t.co/3QvM4sXTaF\"\"]\"\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023026463107428352\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@2fd490e8\tSANTA INES\n[\u0027No importa que instagram esté fallado, el que persevera alcanza!! @ Bogotá, Colombia https://t.co/q4D8J7TXpg\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023026568254431232\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@241260f5\tSANTA INES\n[\u0027Put the blame on me!☁️🕊 @ Bogotá, Colombia https://t.co/mblnHaaKkC\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023028104325935105\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@88526e55\tSANTA INES\n[\u0027Lluvia ⛈️sobre Bogotá. Y sin poder ver el eclipse 🌘 en Bogotá, Colombia https://t.co/duDVDgvjht\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023028180964306945\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@2ea10629\tSANTA INES\n[\u0027#fabricandosueños #transformandovidas #gratitudinfinita en Bogotá, Colombia https://t.co/Bw895etUXV\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023030284625883136\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@b6efe4e6\tSANTA INES\n[\u0027Creo que lo estás perdiendo todo ☺️ #видеосъёмка #видеоуроки #draw #picture #photography #artist #sketch… https://t.co/0qzQwCuRfk\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023030375491227648\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@760dd97d\tSANTA INES\n[\u0027Algunos Colibríes de las regiones calidas y templadas de Colombia en estos hermosos termos de Aluminio.#humbirds… https://t.co/52Sa57oQjT\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023031088967569408\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@a5593dd3\tSANTA INES\n[\u0027🔴NUEVOOOOOO VIDEOOOOOOO\\nMantenimiento básico y cambios de cuerdas \\n\\nDale like 👍🏻 y comenta aquí abajo cualquier pre… https://t.co/Szs9ytQ0n5\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023031871666438144\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@88a3c6c2\tSANTA INES\n[\u0027En @voltaje_15 estamos #cuchicuchi de @KevinFlorezMusc hoy con esta súper coreografía llena de energía con nuestro… https://t.co/vuyVlN0m8a\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023032377390641153\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@f0e35159\tSANTA INES\n[\u0027Acaba de publicar una foto en Bogotá, Colombia https://t.co/EGAe6YlIT4\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023033416974036993\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@f17b5a1e\tSANTA INES\n[\u0027#jazzcolombiaorquesta #dúo #eventos #musicacrosover en Bogotá, Colombia https://t.co/Jk2Y7cqavT\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023033664605708288\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@9000519d\tSANTA INES\n[\u0027Yo se lo que quiero, pero Dios sabe lo que necesito ♡😻 en Bogotá, Colombia https://t.co/OqjZvLzb6I\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023034180467351553\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@12a3b24\tSANTA INES\n[\u0027Noches de Bogota!!! #photographer #instalike #follow4follow #picture_to_keep #photography en Bogotá, Colombia https://t.co/hazsHtms2F\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023034589890142208\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@ee6e3d64\tSANTA INES\n[\u0027Listo el Dcto 1288 del 25 de Julio del 2018. \\nSeran Beneficiados Venezolalos:\\n#Ramv\\n_Venezolan que sellaron pasapor… https://t.co/FG4tooQ7su\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023034810078560256\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@bfba7d19\tSANTA INES\n[\u0027“La verdad es como el sol, puedes ocultarla por un tiempo, pero no va a desaparecer” -Elvis Presley.nPh. marlonsana… https://t.co/RyuUrT9afw\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023035857849212928\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@50fd1655\tSANTA INES\n[\u0027🍕🍕🍕nn#Pizza #Friday #Bogotá #Colombia #Instafood en Bogotá, Colombia https://t.co/pIuDJJ0h1v\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023035925549522947\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@28e0590\tSANTA INES\n[\u0027Deja de seguirme  #bogota #guys #guy #boy  #TFLers #boys #love #me #cute #handsome #picoftheday #photooftheday… https://t.co/Od5stjMBXH\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023037817470025728\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@d078482e\tSANTA INES\n[\u0027Juntos, caminamos (y disfrutamos) juntos. en Bogotá, Colombia https://t.co/WnDUqPjifG\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023039675538309120\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@b21c228\tSANTA INES\n[\u0027Es viernes y todos estamos en las mismas no? @ Bogotá, Colombia https://t.co/j41NxoI5U5\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023041454564929536\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@82a4dffe\tSANTA INES\n[\u0027Cuando en tu dia encuentras familia en tu camino y te regalan una sonrisa y una voz de apoyo \\nGracias primo ramiroa… https://t.co/8fwAe08GWG\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023043515956178944\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@468368f2\tSANTA INES\n[\u0027🙌🏽 en Bogotá, Colombia https://t.co/aNGCUwcK2J\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023045072374259714\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@b0b35c34\tSANTA INES\n[\u0027Participa en el gran concurso para Cineastas Universitarios de COLOMBIA Ve aquí las Bases https://t.co/pmSVMH6mKI… https://t.co/6JbD8MfvS7\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023046787265781761\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@bbddd2f8\tSANTA INES\n[\u0027✨💎😎✍️🎓🇨🇴💳💪✨#CoopCoomeva en Bogotá, Colombia https://t.co/TeODlJezbI\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023047177164255233\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@5619efbd\tSANTA INES\n[\u0027Los #90s en una sola foto en Bogotá, Colombia https://t.co/DQWzabRllr\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023047224673091587\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@b8ac8ae8\tSANTA INES\n[\u0027Sintiendo la belleza de la vida... 😎 en Bogotá, Colombia https://t.co/NYIpiblo1A\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023047429459984389\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@fc162ac0\tSANTA INES\n[\u0027Viajes alrededor del Mundo Photo by @elturismoencol / caption by @elturismoencol //\\n\\nShopping - An offer that grows… https://t.co/wfwsEG1Ms8\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023047981371678722\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@2a5cffa9\tSANTA INES\n[\u0027Acaba de publicar una foto en Bogotá, Colombia https://t.co/Peudwutzvu\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023049804077785088\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@34600ea1\tSANTA INES\n[\u0027¿Será este el principio de algo #especial?nSerá que ya es hora de una nueva #Oportunidad en Bogotá, Colombia https://t.co/Z791wPpr0w\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023050789466595328\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@8925ba56\tSANTA INES\n[\u0027ARRIENDO APARTAMENTO EN BOGOTA, BIEN UBICADO!!!. Información por mensaje directo. en Bogotá, Colombia https://t.co/xnU4KpaVPb\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023051007725641733\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@73aabb52\tSANTA INES\n[\u0027@FlamaProduccion \\n... Siempre de calidad ! \\n\\n-\\n\\nModelo: @Paul_One \\n#PhotoBy #ElUnicoMaxter \\n#location #Bogota… https://t.co/6JBIjvoFFI\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023052403908767744\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@24901378\tSANTA INES\n[\u0027Hoy fue un día muy productivo, que lo empece dándole las gracias a Dios y luego a retomar algunas tareas cotidianas… https://t.co/TdZybcSrrD\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023053440606322688\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@4529c8f7\tSANTA INES\n[\u0027Lovely 🐻...En una panadería cualquiera en Bogotá / in any bakery in Bogotá en Bogotá, Colombia https://t.co/HctCtVcv9o\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023053928752144385\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@66e78ebc\tSANTA INES\n[\u0027Cuando estás oyendo música y tus roomates llegan con cerveza para empatar. Unas casuales en Bogotá, Colombia https://t.co/LkYznguSvV\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023054005126213632\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@54179372\tSANTA INES\n[\u0027Acaba de publicar una foto en Bogotá, Colombia https://t.co/oh3ZvpjSOm\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023054011644223489\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@c626c19c\tSANTA INES\n[\u0027Acaba de publicar una foto en Bogotá, Colombia https://t.co/smQkqQRU6E\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023054097824370688\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@3a3c6fff\tSANTA INES\n[\u0027Un pastelillo? 🍰 en Bogotá, Colombia https://t.co/M7zEt8qLmM\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023054135304826880\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@80cc6273\tSANTA INES\n[\u0027Mis primeros #7meses de #tiaenamorada😍 #majo (Falto el primito mayor 🐥) en Bogotá, Colombia https://t.co/oKuFGp1NGG\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023056342859186176\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@454d049c\tSANTA INES\n\"[\"\"OFERTA CARLOS CARDONA\\nIPHONE 8 256 GB ... $2\u0027550.000\\nCHAT VENTAS 3208602056\\n#bogotá #colombia_folklore… https://t.co/O4ji43e0o5\"\"]\"\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023057779739713537\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@a6bd5037\tSANTA INES\n[\u0027La vida se disfruta en buena compañia... en Bogotá, Colombia https://t.co/iPfwy6QAKy\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023057954084454400\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@7adc2788\tSANTA INES\n[\u0027😂😂 en Bogotá, Colombia https://t.co/fyg4UHIHTe\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023059108965089280\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@6aba494a\tSANTA INES\n[\u0027Por ahí en Bogotá, Colombia https://t.co/lNudVGcZdz\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023060245785006080\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@b116a261\tSANTA INES\n[\u0027Acaba de publicar una foto en Bogotá, Colombia https://t.co/UTDWdl9YaJ\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023060872531468288\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@d3a38a0e\tSANTA INES\n[\u0027Feliz cumpleaños Juli.... @ Bogotá, Colombia https://t.co/9vCwWGPGXy\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023066059341881344\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@f257ff68\tSANTA INES\n[\u0027Acaba de publicar una foto en Bogotá, Colombia https://t.co/ehh04Zra5r\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023066233367916545\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@c056e4e7\tSANTA INES\n[\u0027De donde vengo yo... en Bogotá, Colombia https://t.co/TO9Vn4DFkB\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023066479489687558\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@91c3bce4\tSANTA INES\n[\u0027Mirame cuando menos lo merezca para que mi alma se crezca.\\n\\n.\\n.\\n.\\n.\\n.\\n\\n#cafro #Dancer #Afro #Naturaleza #Afrolove… https://t.co/7GZtDuXy2u\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023068418352861185\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@4de7d66e\tSANTA INES\n[\u0027¿Cómo nos influencia el eclipse lunar del viernes 27 de julio? 🌝🔴\\nEste año tenemos a Marte mucho más cerca de la Ti… https://t.co/ht361uNtDu\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023070093142573062\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@1f57981a\tSANTA INES\n[\u0027Nunca esperes menos, de quien quiere más.n.n.n.n.n#Cafro #dancer #Afro #AfroStylen#Afrocolombianon#Afrolove… https://t.co/ubTzmR0wBL\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023071210521993216\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@1ca2e434\tSANTA INES\n[\u0027Mi nuevo lugar favorito amenramenya en Bogotá, Colombia https://t.co/UWfS6W2sRK\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023071565750067201\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@bccc9f1\tSANTA INES\n[\u0027#34 @metallica #fadetoblack en Bogotá, Colombia https://t.co/4c77ZpwAUq\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023071776048177153\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@45925f4\tSANTA INES\n[\u0027🎶...Hay, recuerdos que no voy a borrar, personas que no voy a olvidar, hay aromas que me quiero llevar, silencios q… https://t.co/SyMYJXJSHY\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023076443780083712\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@797d774b\tSANTA INES\n[\u0027La mejor foto de mi vida! U0001f92d😍🙌🏻 en Bogotá, Colombia https://t.co/as1VkFu7pp\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023077073294974977\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@1a12ad67\tSANTA INES\n[\u0027🎶...Hay, recuerdos que no voy a borrar, personas que no voy a olvidar, hay aromas que me quiero llevar, silencios q… https://t.co/wIy8OtyRYV\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023077170485157888\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@344f63b7\tSANTA INES\n[\u0027Nunca Pares, Nunca Te Conformes, Hasta Que Lo Bueno Sea Mejor Y Lo Mejor Excelentee 👊 Recuerda Que La Vida Siempre… https://t.co/l8AyosPzqe\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023077854672814080\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@b6e6ff5d\tSANTA INES\n[\u0027#Oceano en Bogotá, Colombia https://t.co/kjFEL1BkV2\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023081147562119168\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@3ec5c30e\tSANTA INES\n[\u0027#Oceano en Bogotá, Colombia https://t.co/dyOwbz7HXx\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023081230319935488\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@6bd3182f\tSANTA INES\n[\u0027#Oceano en Bogotá, Colombia https://t.co/txRKDoN4u9\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023081337580859392\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@5133de01\tSANTA INES\n[\u0027Huawei Y9 2018 ... $640.000nChat ventas 3208602056n#huawey92018 #huaweiY92018colombia @ Bogotá, Colombia https://t.co/nHAKf1HMoG\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023081571799236608\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@22444983\tSANTA INES\n[\u0027#UnaRisita en Bogotá, Colombia https://t.co/Hun7ZZ2ktX\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023084564955258880\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@af221be2\tSANTA INES\n[\u0027#QANON #TheStorm #TheStormIsUponUs #Tyler #TeamTyler #KindnessWins #KindnessWings @ Bogotá, Colombia https://t.co/REYHSTMj63\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023089223497330688\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@7626a39\tSANTA INES\n[\u0027⏰El tiempo y sus mecanismos de destino.⏳nn#clock #tattoo #art #inkedup #tattooart #time en Bogotá, Colombia https://t.co/ypSI0DQYxS\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023091793280335872\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@5584cf19\tSANTA INES\n[\u0027Participa en el gran concurso para Cineastas Universitarios de COLOMBIA Ve aquí las Bases https://t.co/pmSVMHnY9i… https://t.co/Jz2yuCAQ1Q\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023099306302210048\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@ea665a38\tSANTA INES\n[\u0027Participa en el gran concurso para Cineastas Universitarios de COLOMBIA Ve aquí las Bases https://t.co/pmSVMHnY9i… https://t.co/gSCX4pSKY2\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023099357887909888\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@c7bb953\tSANTA INES\n[\u0027🤜Nice Black !!!🤛🏿 @ Bogotá, Colombia https://t.co/H1cOAb9Qtr\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023117532910284800\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@90591ae0\tSANTA INES\n[\u0027Un pequeño resumen de la jornada de hoy en Elevados. mulatamedia carovelasquez_g @tibecruz gabrielgonzalezactor… https://t.co/iWEjqasLKZ\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023117928810602501\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@5c6486ed\tSANTA INES\n[\u0027El Dinero no duerme y los Bots tampoco. n#Osc #BlueFire #Intar #Trading #Mercados  #Forex #Liderazgo en Bogotá, Col… https://t.co/H25fUp1RUP\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023119100141334528\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@9e187402\tSANTA INES\n[\u0027Acaba de publicar un vídeo en Bogotá, Colombia https://t.co/rLsndH8yRw\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023149510728380416\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@b5938eb0\tSANTA INES\n[\u0027#sysadmin Happy Day. 🤓💡😎 en Bogotá, Colombia https://t.co/iVMf9J6xPx\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023169697641062402\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@3d370f22\tSANTA INES\n[\u0027🏋🏻\\u200d♂️#consistencyiskey🔑 la suma de esfuerzos en el trabajo diario de #cardio - pesas - alimentación sana y buena ac… https://t.co/XaHLm2mCfV\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023169782072467457\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@e5992d4f\tSANTA INES\n[\u0027Siempre con las personas que valen la pena estar #KawaiiLovers #ConLaElfa #Love en Bogotá, Colombia https://t.co/I16XQyYD3N\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023171702400970752\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@e604c9a3\tSANTA INES\n[\u0027Hacer todo lo que nos gusta! / to do everything we want to. #bmw  #bmwmotorrad #flyfishing #fishing @ Bogotá, Colom… https://t.co/bRE3Y7QMUt\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023172580277137408\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@50be790b\tSANTA INES\n[\u0027¤ C R I M I N A L ¤ en Bogotá, Colombia https://t.co/Fmsd62ESas\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023174958724378626\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@5b67c149\tSANTA INES\n[\u0027Los abrazos más ricos, tiernos y sinceros. 😍😘Te amo mi niño lindo. keilerjesus en Bogotá, Colombia https://t.co/bteesUEpbF\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023175138429333505\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@be34084b\tSANTA INES\n[\u0027#lacintura #remix @asolermusic tinitastoessel @official_flo https://t.co/DrjAx5HRtq… https://t.co/eLFbeMnW1D\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023175637379547136\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@f918c26a\tSANTA INES\n[\u0027@dannyromeroprod #Raro lanzamiento video https://t.co/UyWJuCnfwj fuente sonymusiccol… https://t.co/1K9MvIW8fF\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023176179786960896\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@3e77665c\tSANTA INES\n[\u0027@mariag_gg #BuenosDias Ningún legado es tan rico como el de la honestidad. #legado #honestidad #rico #FelizSabado… https://t.co/wA5bpxefJg\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023176648215199744\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@70900ba7\tSANTA INES\n[\u0027Acaba de publicar una foto en Bogotá, Colombia https://t.co/cssJ2Nn9Wm\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023176737503567872\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@eb823efa\tSANTA INES\n[\u0027Esto si me hizo reír 😂 😂😂😂 en Bogotá, Colombia https://t.co/BGyhBwaYeh\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023177316191465473\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@7daf2797\tSANTA INES\n[\u0027@isabelamoner sorprende con el 🇨🇴 @sebastianyatra #myonlyone #nohaynadiemas… https://t.co/mVXkYCfk71\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023177477693132800\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@f32320e8\tSANTA INES\n[\u0027Así amanece #Bogotá en Bogotá, Colombia https://t.co/Qj3tgFrHxo\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023177692185849856\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@dadc8ead\tSANTA INES\n[\u0027@jbalvin materializando sus sueños en la Moda desde su amada 🇨🇴… https://t.co/jRo2MgfazB\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023178071812132864\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@27023f4a\tSANTA INES\n[\u0027#diadeljuegonick listos para jugar 🇨🇴 #bogota @nickelodeontv nickjr nickjrla… https://t.co/LhxIdFxW8c\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023178687095685121\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@861d3979\tSANTA INES\n[\u0027@VictoriaSur llega a #bogota en su #tour #hastaelnuevosol https://t.co/wQpI41VT5r… https://t.co/txKTUYKrMU\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023179495484911616\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@4d0f345f\tSANTA INES\n[\u0027Te perdiste el #unplugged de @molotovbanda ?? https://t.co/mCKp4nGZfB @mtvla @mtv fuente… https://t.co/EZ0xPabLyn\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023179621293019136\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@b10c0282\tSANTA INES\n[\u0027@JAlvarezFlow nos da #unchance @joryreal @CarlitosRossy lanzamiento https://t.co/Bfavo3W0D5… https://t.co/zNJ9C2RWEg\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023179997752614912\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@f7ca63cc\tSANTA INES\n[\u0027Encontrábamos yo !! En el puesto de los aburridos en Bogotá, Colombia https://t.co/vNw3SWj9tv\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023180225859997697\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@555eae53\tSANTA INES\n[\u0027El regreso de @cadaviddiego a @themillsband sólo aquí https://t.co/9U3BABtu8J fuente jaquepress… https://t.co/kMUAdj7ejJ\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023180348769951744\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@f54ab682\tSANTA INES\n[\u0027😵Botellita Pisco peruano😵💣💥💨💫 #machupicchu #paperderlaporra... en Bogotá, Colombia https://t.co/UBxmkskCJC\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023180753297846280\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@5eaa5fdc\tSANTA INES\n[\u0027#pelisporbogotá invitación @idartes #agosto #julio https://t.co/8vn8ZEOI7G en… https://t.co/Dna5XRyygH\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023181545924902918\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@aba006d9\tSANTA INES\n[\u0027Bodies también son #cucos #muestrametuscucos #tuscucos en Bogotá, Colombia https://t.co/KAz9qOCUaH\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023183370346479619\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@674fc77b\tSANTA INES\n[\u0027Nuestra estudiante de estimulación temprana. Emma  🎶😊👸#dibujoritmico #TuAcademiaADomicilio en Bogotá, Colombia https://t.co/Sg2wgrXjTY\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023184245915889664\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@25c0c5f4\tSANTA INES\n[\u0027Iniciando hoy Sabado con #mommymakeover . Todos Mis procedimientos son el resultado de un análisis integral de mis… https://t.co/Mv96mB21uQ\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023184315566485504\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@d7bb1e81\tSANTA INES\n[\u0027Acaba de publicar una foto en Bogotá, Colombia https://t.co/rkGF6u8Nf2\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023184428040904711\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@1f725725\tSANTA INES\n[\u0027Despertando con @lawamendoza en @somosla92 ya vieron el video #Clandestino de @shakira ft @maluma ?? Increíble maña… https://t.co/6AAuwnM0II\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023185215974461440\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@2f4df780\tSANTA INES\n[\u0027Acaba de publicar una foto en Bogotá, Colombia https://t.co/dUevwRXHeX\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023187126656151553\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@e9320741\tSANTA INES\n[\u0027Magia !! Como el agua @liannamusic 👑 se merece todo el amor y éxito del mundo ! \\n\\n❤️❤️❤️❤️❤️❤️❤️❤️\\n\\nGran trabajo !… https://t.co/afsWauRx7F\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023187724486885376\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@d286c614\tSANTA INES\n[\u0027#celebroseryo porque sé que la discriminación está en todos nuestros contextos, en los espacios más íntimos y más s… https://t.co/4TX0ELSury\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023188421756346371\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@c53e0e24\tSANTA INES\n[\u0027Sigue al conejo blanco, #despierta @ Bogotá, Colombia https://t.co/o7KDuH90OH\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023188648156639232\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@1fe51311\tSANTA INES\n[\u0027GUSTAVO GUS COLON Y SU TROMPETA EN LAS LEYENDAS VIVAS DE LA SALSA IV- ORQUESTA COLON EN TARIMA.\\n#music #musician… https://t.co/Kk2XmYtjfC\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023188871847313410\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@e1beec2a\tSANTA INES\n[\u0027Adivinen que estoy haciendo... #WakeUp #SaturdayMorning en Bogotá, Colombia https://t.co/w4zosPf1WC\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023188984384565249\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@e326cbee\tSANTA INES\n[\u0027Trabajando....... #diseñosexclusivos #bebes #cuartodelbebe #arcoiris #bebesitos #azul #rosa #tonospastel #bogotá en… https://t.co/BfUjd8W6SB\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023191328673460224\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@4cbe1a6a\tSANTA INES\n[\u0027Acaba de publicar una foto en Bogotá, Colombia https://t.co/EpcGgZk9p2\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023191976743723008\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@8dfba3a\tSANTA INES\n[\u0027Felicitando a la princesa en su cumple 9 #artegamor #picoftheday #marianavallejo #bday #birthday en Bogotá, Colombia https://t.co/tTzD5aMEni\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023192544405069825\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@36738da5\tSANTA INES\n[\u0027Acaba de publicar una foto en Bogotá, Colombia https://t.co/LJucCfs7Hr\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023194579913322496\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@dc4048e\tSANTA INES\n[\u0027El crew listo para la embestida. #lukaskristodp #cinematographer #cinematography #asilohagoyo #pushthelimits… https://t.co/PybV9iRqBn\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023195308870848512\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@da9f531b\tSANTA INES\n[\u0027#justbreathe #solorespiran•nQuizás bastaba respirar, solo respirar... muy lento.n:nNo te apresures a vivir, disfrut… https://t.co/KAEJ4cmZRU\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023196056777973760\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@19596b4d\tSANTA INES\n\"[\u0027Viajando aprendí que los \"\"drybags\"\" son una manera muy práctica de llevar las cosas a salvo de la lluvia y del polvo… https://t.co/fAqIxEbUsT\u0027]\"\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023198946511007744\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@3f7444dd\tSANTA INES\n[\u0027#tiledesign #tiles #paterns en Bogotá, Colombia https://t.co/LfgRtoHiEV\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023199560154460164\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@b7f54ff2\tSANTA INES\n[\u0027Acaba de publicar una foto en Bogotá, Colombia https://t.co/VvpR6MjVk2\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023199936396095488\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@158cfcb\tSANTA INES\n[\u0027Acaba de publicar una foto en Bogotá, Colombia https://t.co/kUhO7JpOfg\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023200246032228352\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@413e25b0\tSANTA INES\n[\u0027Se parece a mama ???????? en Bogotá, Colombia https://t.co/RunoCRCWVo\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023200786774282242\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@96728592\tSANTA INES\n\"[\u0027Recuerdan la famosa canciógangnam style o el \"\"baile del caballo\"\" creada por el famoso (PSY)  de tras de ese nombre… https://t.co/9br7DFSkyV\u0027]\"\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023201136067727360\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@9d69d55e\tSANTA INES\n[\u0027Acaba de publicar una foto en Bogotá, Colombia https://t.co/kFbomXOsiF\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023202409299017728\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@24571c20\tSANTA INES\n[\u0027😉 en Bogotá, Colombia https://t.co/sqe6LmNjDW\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023203418050113536\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@8d2a8df7\tSANTA INES\n[\u0027El outfit de hoy son colores clásicos pero siempre muy elegantes, blanco y negro la combinacion perfecta.!!n.n.n.n.… https://t.co/QYB1D7iW95\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023203474836795392\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@5145b94b\tSANTA INES\n[\u0027Desodorante Sport Energy con fórmula avanzada 72 horas, combina ingredientes de eficacia comprobada que garantizan… https://t.co/4cAzL79qjZ\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023205715584983041\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@15d03898\tSANTA INES\n[\u0027Estuvimos aquí y la pasamos genial.... Por que se fue el bajista?? Alguien sabe??🎤📻🎸🎹🎤🎼🎵🎶📻🎸 #luegodeltributo… https://t.co/tDiInORmfv\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023208148813983745\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@2eefe865\tSANTA INES\n[\u0027Foto 0001343\\n\\n#Photographer #photo #photography #photooftheday #shooting #instagram #wernersamstudio #iphone… https://t.co/oAUuevVtaD\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023209817186422784\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@87a5cb6f\tSANTA INES\n[\u0027💓⚡️👾|| Mamá hace 55 años llegase a darle amor y luz a esta tierra, gracias por tu esencia por enseñarme a ser siemp… https://t.co/6u6iFFgX0z\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023209841743937536\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@cdd320bf\tSANTA INES\n[\u0027Cumpliendo 50 preparado para lo que venga... #Les’tGo en Bogotá, Colombia https://t.co/6rQknAK8HL\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023212266177454080\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@b6c90566\tSANTA INES\n[\u0027Ready...\\nSet...\\nRUN❗️\\n#Running #Jogging #WorkOut #NRCBOG #StarkGym #Fitness #Fit #LifeStyle #Happy #Love #CarpeDiem… https://t.co/5l98fz4piH\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023213122545434624\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@887e1865\tSANTA INES\n[\u0027En compañía!!! #vamoscontoda #mishijos #zonavalentia en Bogotá, Colombia https://t.co/tJWkRupgYS\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023213700289769472\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@e9f899a7\tSANTA INES\n[\u0027¿Te gustaría conocer Colombia con nosotros?\\n\\nTe invitamos a disfrutar de los sabores de Colombia en un tour  gastro… https://t.co/wMq52Vv14V\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023214389384556546\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@5d21a730\tSANTA INES\n[\u0027I found a love for me. moni_lrb #love en Bogotá, Colombia https://t.co/Y3bor41rHh\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023215118879019009\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@6d4d5058\tSANTA INES\n[\u0027Feliz sábado!! n#shabatshalom #friends en Bogotá, Colombia https://t.co/dLrccunrHX\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023215870972190720\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@63164ad2\tSANTA INES\n[\u0027🤗 en Bogotá, Colombia https://t.co/eebRct3jj1\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023217397539463173\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@739ebe56\tSANTA INES\n[\u0027Que el fin de semana este cargado de cosas positivas, que estén al lado del amor, de la familia, de los amigos.… https://t.co/SOaoQhYBtP\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023218322173767680\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@f2ff3f2f\tSANTA INES\n[\u0027Quieres ir a RG este agosto?2018? 🏕⛹🏻⚽️🏀Entonces, tienes que estar pendiente de mis redes, que en los próximos días… https://t.co/mwwALgpgPz\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023219216457949184\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@400217cb\tSANTA INES\n[\u0027|ATENCIÓN| \\n\\nEste próximo sábado 4 de agosto en la Blibioteca del Parque el Tintal estaremos esperándote para que r… https://t.co/dQB8BKkaU1\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023219308221030400\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@3d73ccf6\tSANTA INES\n[\u0027#newhaircut #colombianman #deadpool #sorprise en Bogotá, Colombia https://t.co/5ky5WsH12E\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023219367679541248\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@52b88252\tSANTA INES\n[\u0027Webinar Julio 31.nACADEMIA EMERGENCIASnMartes 8:30 PM.nDr. Rene Castillo, México 🇲🇽, Tema: Decisión de intubar.nCon… https://t.co/EJTlHqguXc\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023219594339729414\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@363d7022\tSANTA INES\n[\u0027Si todos supiéramos lo maravilloso de emprender, dejaríamos de trabajar por los sueños de otros y empezaríamos a co… https://t.co/o5LxHCvWfw\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023220158473613312\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@c740523c\tSANTA INES\n[\u0027😍🙈😍🙈 en Bogotá, Colombia https://t.co/5iHEm1gIpJ\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023222553198960640\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@1c6ce41e\tSANTA INES\n[\u0027Time to say goodbye to #colombia for now. Thank you for the memories and excited to be back here a few times in 201… https://t.co/RfkgE6Gz4e\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023222647944036353\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@5fdb9712\tSANTA INES\n[\u0027Old pulteney. the 26 Year Old 1990 Vintage Deep amber, hint of sea air. spice, vanilla, toffee and sweet honey. Rob… https://t.co/4r2OCsfbJD\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023223287575281664\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@6bc061ff\tSANTA INES\n[\u0027A veces Dios necesita llevarnos a un punto donde estemos solo, el y tú o yo, diría yo q para revaluar nuestras vida… https://t.co/0dVYkfs06N\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023223806700081152\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@a1e4de6d\tSANTA INES\n[\u0027#animesdel1 nYo estoy conectado como cuando era niño jijiji en Bogotá, Colombia https://t.co/STtCD29mg8\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023223853290586118\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@30509f15\tSANTA INES\n[\u0027En @radiounobogota #LosEnfrentadosDeUNO hoy @alexmanga1 Vs @francypopular1 al aire @djmarcosuarez77 en Bogotá, Colo… https://t.co/mk34QnAWEX\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023224435254484992\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@38a693fb\tSANTA INES\n[\u0027Feliz cumpleaños mi hermano. en Bogotá, Colombia https://t.co/AoGSlPC17V\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023225957065347075\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@a62a2689\tSANTA INES\n[\u0027Solo quiero desearles un feliz y placido sábado🕴🏻🤳🏼U0001f964. en Bogotá, Colombia https://t.co/R73TTwmA9G\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023227091993604097\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@c924ea02\tSANTA INES\n[\u0027Fue una buena noche compartiendo con amigos y lo más importante, con la persona que amas 😍 en Bogotá, Colombia https://t.co/63APakh813\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023227171588976645\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@44a65520\tSANTA INES\n[\u0027Cuando tienes ganas de salir a pasear, sientes el clima frío! Pero te da flojera! Es como que... mejor veo desde aq… https://t.co/GqXkbXfcD3\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023227559104983040\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@3f06e9d1\tSANTA INES\n[\u0027Old pulteney. the 26 Year Old 1990 Vintage Deep amber, hint of sea air. spice, vanilla, toffee and sweet honey. Rob… https://t.co/F413AD3Cze\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023227940350386176\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@143fe23d\tSANTA INES\n[\u0027Los sueños se cumplen a medida de qué pasa el tiempo, no te aceleres el camino es largo #jairotibaquiracastro en Bo… https://t.co/OHtOJP8jEg\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023227983144935426\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@39b87fbd\tSANTA INES\n[\u0027Ups! Me descubrí! en Bogotá, Colombia https://t.co/sM56u9vB6S\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023228772462616578\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@495decd4\tSANTA INES\n[\u0027Gracias por hacer tanto por mí, me alegras la vida enterita. 😭💕 en Bogotá, Colombia https://t.co/9VZUdYJNn3\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023230190628102144\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@628a1068\tSANTA INES\n[\u0027Haz lo que amas, ama todo lo que hagas✨.n.n.n#Bogotá #colombia #me #boy #Happy ##maracaibo #zulia #venezuela… https://t.co/4x1MscAaHQ\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023230591095980032\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@9d04a2d\tSANTA INES\n\"[\"\"You\u0027re the inspiration of each song...♥️🎸🎙️\\n.\\n.\\n.\\n#love #inspiration #myworld #amazing #amor #life #music #colombia… https://t.co/scDw3WRsHR\"\"]\"\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023230967740354560\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@d551c6df\tSANTA INES\n[\u0027#TuDecides #YouDecide #AñoDeConquista #Portadores #Freedom @ Bogotá, Colombia https://t.co/b4TFjZzLJG\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023233440542547968\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@2bf7d732\tSANTA INES\n[\u0027#Chapinero #Bogotá en Bogotá, Colombia https://t.co/LxsVMDBXed\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023234451898286080\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@e251c4ab\tSANTA INES\n[\u0027Under the Sea... | ©2018 Alejandro Gómez B.\\n.\\n.\\n.\\n#colombia #cundinamarca #outdoors #environment #climatechange… https://t.co/NiWfAtb0wF\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023235040363380736\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@f9f7508d\tSANTA INES\n[\u0027Hija de mi ♥ TE AMO -- -- --\\n#slime #smile #viralteam #viral #hija #teamo #tbts #tbt #tbt❤️ #plazadebolivar #bogotá… https://t.co/j9BqhrkF8d\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023235272090243072\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@a43c2fc4\tSANTA INES\n[\u0027Mañana nos vemos en FESTIPARQUES Bogotá! alcaldiabogota @radiounobogota @rcnradio en Bogotá, Colombia https://t.co/QkNjhWUCUC\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023236603697942528\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@aed8cadf\tSANTA INES\n[\u0027❤️☺️ @ Bogotá, Colombia https://t.co/NQS3pEr8vU\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023236635154993154\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@13afdeae\tSANTA INES\n[\u0027back to my roots 🌳 @ Bogotá, Colombia https://t.co/G3lJ3FfTEh\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023236954895409152\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@f6a65c7d\tSANTA INES\n[\u0027Aquí es cuando piensas! Menos mal me dejé llevar por mi Flojera...nperdón... Por mis instintos!!! Que llueva, que l… https://t.co/BnPXlkDJMZ\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023237584678313984\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@6f38efb2\tSANTA INES\n[\u0027#saturdayfun #newlook #goodmorningworld #model #happymoments #followme #follow #lifestyle en Bogotá, Colombia https://t.co/9OoDYpEKgM\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023237899221954562\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@8bcbb5b\tSANTA INES\n[\u0027#eseltiempo iglesiacei en Bogotá, Colombia https://t.co/MXBhfbuI0X\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023238875777585154\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@d365d4b\tSANTA INES\n[\u0027Es pasión de vivir♡♡♡nun sábado deli💞🎶😘🌼🤗n💋💋💋💋💋💋💋💋 en Bogotá, Colombia https://t.co/WDBLSWsBmL\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023239021470916610\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@10491f59\tSANTA INES\n[\u0027Cuando lo que haces esnAgradecer y vivir nintensamente♡♡♡n💞🎶💋🌼💞🎶💋🌼🤗 en Bogotá, Colombia https://t.co/cbdxWVmule\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023239479660670981\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@33830f8f\tSANTA INES\n[\u0027Y pueden ustedes confiar en Dios, que no los dejará sufrir pruebas más duras de lo que pueden soportar.xa0 ❤️❤️❤️❤️… https://t.co/N2aTTmROPx\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023242364155056128\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@e211146a\tSANTA INES\n[\u0027Y pueden ustedes confiar en Dios, que no los dejará sufrir pruebas más duras de lo que pueden soportar. ❤️❤️❤️❤️… https://t.co/hx0xgLy3fn\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023242527732912130\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@c5ab0b59\tSANTA INES\n[\u0027Es la verdad 🤔U0001f92d en Bogotá, Colombia https://t.co/1HGfO09Amr\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023243465822494721\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@55e7b30\tSANTA INES\n[\u0027#diagramaclic #marketingdigital #diseñoweb #pnl @diagramaclic en Bogotá, Colombia https://t.co/g66Dh9ZIi0\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023243585972568064\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@8cf44b16\tSANTA INES\n[\u0027💫💃🏻🌹🕺🏻🎉 happy birthday to my partner-in-crime-and-beyond!\\n:\\n:\\n⚡️warning: mushy post #sorrynotsorry ⚡️\\n:\\nOnce in you… https://t.co/0Iu0R7jhDW\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023244208570806272\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@2beb6a73\tSANTA INES\n[\u0027Vinilos Decorativos Infantiles. 🐒🙈🙉🙊📲320 802 9210.\\n\\n#vinilos #vinilo #vinyl #vinyldeco #decoraciones #decoracion… https://t.co/7m9wYRDyXq\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023244492839604226\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@b2d89f31\tSANTA INES\n[\u0027👌🏻 en Bogotá, Colombia https://t.co/3M7R4xUPrH\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023244516457766912\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@40fb09f2\tSANTA INES\n[\u0027Acaba de publicar una foto en Bogotá, Colombia https://t.co/pNjaZzmWim\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023245668586909701\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@ad6dcc8b\tSANTA INES\n[\u0027Estrenando estas piezas de @cdlavalle que tanto deseaba tener y que además de ser bellísimos, para mi representan l… https://t.co/R7O56m9ka4\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023246203566346240\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@2ee32211\tSANTA INES\n[\u0027Acaba de publicar una foto en Bogotá, Colombia https://t.co/OR0ZL4iiQk\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023247328969482242\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@afe74974\tSANTA INES\n[\u0027Dijimos... ¡A patinar! Y bueno... También hay que saltar. Siempre Teo-Céntrico #Bladerlife @roces_official en Bogot… https://t.co/g1Ttw4wgPv\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023247441099935745\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@5ed32486\tSANTA INES\n[\u0027Mi negrita hermosa te amooo con todo mi corazón en Bogotá, Colombia https://t.co/IiFNCUQtrt\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023247782415687683\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@aa4435cc\tSANTA INES\n[\u0027#Sabado #Ofi #Casual U0001f92b en Bogotá, Colombia https://t.co/qUXKZTepCp\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023248752952397824\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@f6e1f234\tSANTA INES\n[\u0027Just posted a video @ Bogotá, Colombia https://t.co/KkLpEYbgzd\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023251008133185538\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@727ca57f\tSANTA INES\n[\u0027Empezando desde muy temprano nuestros eventos empresariales #abductionparty #laminitkmasbacana djjones_eduardo.reye… https://t.co/fd5irZuVYc\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023251393078087680\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@b3ce6646\tSANTA INES\n[\u0027😴💤#sábado #lazysaturday en Bogotá, Colombia https://t.co/sXwxHJ7qQk\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023252795737165830\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@b4df1300\tSANTA INES\n[\u0027El bebé de la casa 🐶🐶 #Tory en Bogotá, Colombia https://t.co/H6d3CtWSit\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023252885956571136\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@8d1fdcf5\tSANTA INES\n[\u0027Por acá acompañado de Luke Skywalker, Han Solo, un Stormtrooper (soldado del ejército imperial) y otros amigos más… https://t.co/pwbQNkixnq\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023252953627602944\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@68190b0f\tSANTA INES\n[\u0027Bueno mi gente de turmequé Boyaca allá nos vemos esta noche vamos con todo en el nombre de jesucristo en Bogotá, Co… https://t.co/u2L2Hw3jUy\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023254343850504192\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@bd16cc13\tSANTA INES\n[\u0027#ATR ...Feliz de la mejor oficina.....🛫🛫🛫🛫 en Bogotá, Colombia https://t.co/rrFJA33v2Q\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023254607877701632\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@c93ff8d7\tSANTA INES\n[\u0027#Repost @MarthaVelandia with get_repost\\n・・・\\n#Repost @NACHO_ACERO (get_repost)\\n・・・\\n🤣 original invitación #Mañana… https://t.co/uDpt7vtjuk\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023255458587570177\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@b1d88a4b\tSANTA INES\n[\u0027Bruce!!!! en Bogotá, Colombia https://t.co/evncjMhPPM\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023255764700286978\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@9ffa9135\tSANTA INES\n[\u0027Bendiciones y admiración pa este señor @jamsha_ el putipuerto del género en Puerto Rico un abrazo men!.. en Bogotá,… https://t.co/IalKfCxe1k\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023255808975536129\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@5f57e81f\tSANTA INES\n\"[\u0027\"\"Efectivamente son los años de impulsar el bordado y el tejido los que nos han mantenido firmes y con esperanzas pa… https://t.co/YaybQjlrAm\u0027]\"\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023256191906922497\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@90076f72\tSANTA INES\n[\u0027💚 Nuevo!!!! #embroideredjumper disponible en nuestra tienda Cra 7 #53-52 o pídelo por Dm o WhatsApp en Bogotá, Colo… https://t.co/3H1Obq71qp\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023256933346828288\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@d4248b3a\tSANTA INES\n[\u0027mirando locaciones en Bogotá, Colombia https://t.co/EIyV8tCD5O\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023257753769402368\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@b799958e\tSANTA INES\n[\u0027Hosting a djcitylatino panel with our friend in #Bogota @dnamusicdj with @thombsmusic @diskodrew . Thank you for th… https://t.co/VPQDwhbWEI\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023258317798498305\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@e2aa34cc\tSANTA INES\n[\u0027locacones en Bogotá, Colombia https://t.co/r3THXybd4y\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023259596843114497\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@74136595\tSANTA INES\n[\u0027Todos con el ojo brilloso del cansancio 😩 pero con la sonrisa enooooorme 😆 de un enorme trabajo hecho por cada uno… https://t.co/YB9XHcciqj\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023259633778077697\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@9ba57fcb\tSANTA INES\n[\u0027letourdefrance tras la etapa de hoy CRI. n#FuerzaNairo #Colombia te respalda siempre. en Bogotá, Colombia https://t.co/YsEPGgSWEf\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023259775469989889\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@540ca16c\tSANTA INES\n[\u0027I wanted to experiment with the #procreate brushes and fight against my perfectionism making a more rustic illustra… https://t.co/WCAQm2wZal\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023260153150353408\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@abae546a\tSANTA INES\n[\u00271/2 onza de #jackdaniels + 1/2 onza de #jägermeister + una pisca de sambuca + 🔥\\nAsí es nuestro poderoso shot… https://t.co/pQcA5BLeOZ\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023260501822922752\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@e9dd702c\tSANTA INES\n[\u0027Regrann from @Elygutierrez19  -  Activada... U0001f92a❤️🙏🏼 #pacificpalisades  - #regrann en Bogotá, Colombia https://t.co/ynRJ0N27uR\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023260857399160834\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@29ad1a44\tSANTA INES\n[\u0027Regrann from @JtgJose  -  @Elygutierrez19 ❤  - #regrann en Bogotá, Colombia https://t.co/jX9pSkzu8V\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023261002224349192\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@d285e05\tSANTA INES\n[\u0027Regrann from @16mariarosa  -  #ElizabethGutierrez @Elygutierrez19 🏃u200d♀️ Vía #IGStory  - #regrann en Bogotá, Colombia https://t.co/UnKAivts3z\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023261296148598784\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@e92bff93\tSANTA INES\n[\u0027#saturdayvibes Continuamos con gira de medios! Gracias por recibirnos y por la buena energía 🔥🦀🇨🇴 • Keeping on with… https://t.co/rhgooVmigN\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023261339073105921\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@7799bf2b\tSANTA INES\n[\u0027THANK YOU!!!!!!!! When your dream actually comes true! Sooooo many people to thank!! I couldn’t have done it withou… https://t.co/EthyifdCEO\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023262442267267073\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@a9560705\tSANTA INES\n[\u0027Mini Paisa #chelagourmet en Bogotá, Colombia https://t.co/PN2JmElagh\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023263175519731712\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@857fcb23\tSANTA INES\n[\u0027La última y nos vamos #pandebono y #buñuelos U0001f929🐷👆🏻 en Bogotá, Colombia https://t.co/H0jhrRqOxA\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023264455428325376\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@a6b4b339\tSANTA INES\n[\u0027#bellasylideres #seremossucopia #mujeresbellas #nuskin #aquivamos #diaadia #miporqueYo #siempreYO #mododevida… https://t.co/TlgNRMd8Jf\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023265560413569025\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@c5f9bc7f\tSANTA INES\n[\u0027Si no te sientes cómoda en ti misma, no encontrarás comodidad al lado de nadie, ni en ningún lugar, espacio o situa… https://t.co/j5X5JJQTV6\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023265873992273925\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@d8f0ad38\tSANTA INES\n[\u0027#saturdayvibes Continuamos con gira de medios! Gracias por recibirnos y por la buena energía 🔥🦀🇨🇴 • Keeping on with… https://t.co/d98I01HPx8\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023266059090984962\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@3f569c77\tSANTA INES\n[\u0027El bautizo de Juli              #VSCO @ Bogotá, Colombia https://t.co/opMsJBGxz7\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023269113089716224\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@58628a72\tSANTA INES\n[\u0027Birthday girl👑🌹 ¡¡Ya son 23!! Gracias Dios por éste hermoso día, por mi familia, mi nueva familia y sobre todo grac… https://t.co/8Vlm1HhKaX\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023269426756444160\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@46e6f3a8\tSANTA INES\n[\u0027Si meto a mis #Pokémon en un #gym de #pokemongo cuenta como que tengo un #gymbody ??? en Bogotá, Colombia https://t.co/ASiOLRf4Iq\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023269773512192001\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@44c102dd\tSANTA INES\n\"[\u0027#Repost hessaseries (get_repost)n・・・nqueen_philonese : \"\"Hardin loving the hair and makeup trailer.\"\"\\n-\\n#aftermovie… https://t.co/AVLNeBwxB5\u0027]\"\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023270063619682304\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@f3241755\tSANTA INES\n[\u0027Acaba de publicar una foto en Bogotá, Colombia https://t.co/kHxgF59Tl6\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023271097763065857\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@d91b7e77\tSANTA INES\n[\u0027💥Te mereces un copero que se adapte a todos tus momentos en casa🏠. Tu hogar👪 es testigo de horas de conversación🛋,… https://t.co/Kn9KkQBdVC\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023271123721412608\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@a98cd5eb\tSANTA INES\n[\u0027Sopa Méxicana 🍜  \u0026amp; sierra 🐟 #FoodPorn \\n#Foodie #Cocina #chef #foodstyle #Pasion Nos convertimos en arquitectos de e… https://t.co/szd7nxQloK\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023271605320003584\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@b8d28b91\tSANTA INES\n[\u0027Bogotaaa llegó el gran día. El concierto mas esperado del año. La Combinación Perfecta. \\n\\n#sabado #28julio #bogota… https://t.co/6qhitDLS0r\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023272501562855425\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@84a0389c\tSANTA INES\n[\u0027Feijoada vegetariana😛 jum jum en Bogotá, Colombia https://t.co/RZ0LOWvDHF\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023272690675793920\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@53ad6542\tSANTA INES\n[\u0027Te gustan los murciélagos? A mi me encantan, son fundamentales para el equilibrio natural.n#murcielagos #bat… https://t.co/BM2b567Xyk\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023273335222951937\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@f8967bd4\tSANTA INES\n[\u0027Mi Ángel es...\\nen el templo que Soy sirviendo a la Presencia Dios en mí.\\n\\nY qué es para ti tu Ángel?\\n\\nEscribe en lo… https://t.co/fJNpkZTSFN\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023273637175066629\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@f3623ff5\tSANTA INES\n[\u0027Se acabó la aventura. Que guayabo... Pero vienen más en Bogotá, Colombia https://t.co/sjULCvEZMj\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023273952649650176\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@998b279f\tSANTA INES\n[\u0027Pendejos... v: en Bogotá, Colombia https://t.co/oNulCRI5aQ\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023275018376105986\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@43312639\tSANTA INES\n[\u0027Solo diré que mi esposa tiene muy buen ojo para los amigos. Su dicotomía de conocido-amigo hace que sea esta gente… https://t.co/wuhtffiCvZ\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023275070851112960\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@f56ad3ad\tSANTA INES\n[\u0027Es bueno intentarlo @vadlts \\n*\\n*\\n*\\n*\\n#colombia #frasesespañol #frasesdelibros #motivacion #frases #CommunityManager… https://t.co/cW24iLL2Xb\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023275443670011905\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@9fbbaf03\tSANTA INES\n[\u0027Acaba de publicar una foto en Bogotá, Colombia https://t.co/88AomFQBqa\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023275717314850817\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@54af8d56\tSANTA INES\n[\u0027#Repost silvestredangondn・・・nY el turno para la capital será el viernes 14 de septiembre, #EstoEsVidaTour llega a B… https://t.co/RgIyeQA6SF\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023276028918226945\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@1fe4171\tSANTA INES\n[\u0027#ronin  @rokinonlenses #rokinon #insightpyd #movies #cgi #cinematography #cinemacamera #filmmaking #makingofmovies… https://t.co/cLLDPnYWIk\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023276284036702208\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@ca4d0c9b\tSANTA INES\n[\u0027Todo listo para mañana 💪🏼🏃🏻\\u200d♂️💪🏼 ya son 15 años de tradición! @mediamaratonbog @benefiteam #running #hobbie en Bogo… https://t.co/SN6uQrR77D\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023277831495798789\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@46a042ed\tSANTA INES\n[\u0027Mauro Castillo en Bogotá, Colombia https://t.co/iaOtd9JxMn\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023278097838174209\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@128da55d\tSANTA INES\n[\u0027Así estamos en @dnamusicdj ... en el #openhouse de @dnamusicdj @djcity djcitylatino djtombs este sábado 28 de julio… https://t.co/aLVHPfvlji\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023279444805312512\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@33c8af32\tSANTA INES\n[\u0027Acaba de publicar una foto en Bogotá, Colombia https://t.co/I2mWf2vcWt\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023279448257429504\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@60c04208\tSANTA INES\n[\u0027Tarde de sábado bien elegante 😁👶🏻🐥🐥🐥🐥 y de fútbol más tarde⚽️⚽️⚽️⚽️⚽️ en Bogotá, Colombia https://t.co/CdYfxgjugu\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023279467681259521\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@4c1a982\tSANTA INES\n[\u0027Diseño ee empaque #diseñograficocolombiano #diseñografico en Bogotá, Colombia https://t.co/Ub96JBEfMk\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023279529207455745\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@67f56eb6\tSANTA INES\n[\u0027Eso solo aplica en otro país, planeta o dimensión alterna. En locombia alias chibchombia, jamás de los jamases!!! e… https://t.co/tmoYtjnkYg\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023279753862819841\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@4112ac0e\tSANTA INES\n[\u0027Happy Saturday 🤓 en Bogotá, Colombia https://t.co/0DYtnTBwcV\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023279933781667840\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@f3a84725\tSANTA INES\n[\u0027Acaba de publicar una foto en Bogotá, Colombia https://t.co/DEzn2pEB1D\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023280013095751681\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@4319e07d\tSANTA INES\n[\u0027Acaba de publicar una foto en Bogotá, Colombia https://t.co/6WhSUZYUMV\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023280221955522561\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@51859c2d\tSANTA INES\n[\u0027A vapear que el mundo se va a acabar 😉🤣🤣\\n\\nDual coil alien de jo.mico\\nGracias a magicvapecol\\nRda: Dead rabbit \\nMod:… https://t.co/J6C86L0XEM\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023280240909602817\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@2e224632\tSANTA INES\n[\u0027#arcoirisbebesitos #cuartodelbebe #amor #azul #rosa #pacto #bebes #colores en Bogotá, Colombia https://t.co/ciyR1vzV4i\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023280290519764993\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@8798935\tSANTA INES\n[\u0027Nuestra #ReinaDeReinas 👑 @arelyshenao hablando de su gran tema #Nopodemoscallar 👍 #CanciónCampaña en contra… https://t.co/o2R626n0yw\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023281114230743040\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@554cfb12\tSANTA INES\n[\u0027Fabuloso recorrido Gourmet por la capital #recomendadisimos  #buenacomida #buenaatención… https://t.co/YqYapSbjgB\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023282012734533637\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@4c222e4\tSANTA INES\n[\u0027Invitación especial de @kairosdj \u0026amp; bnjmedios #musicacristiana #alabanza #adoracion #salmista #bendiciones #fe… https://t.co/e1MoN89C4a\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023282385931182080\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@a1a44537\tSANTA INES\n[\u0027Nuevo vídeo 😁 visiten mi canal (Julián Vargas)  #pubgmobile #pubg #game #gamer  #gamers \\nhttps://t.co/s8gUkyfZyi en… https://t.co/Nhf4AVNSzm\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023282842300760064\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@c719fa70\tSANTA INES\n[\u0027😎 en Bogotá, Colombia https://t.co/MAEQhN4upa\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023283104167940097\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@b2e0e766\tSANTA INES\n[\u0027En @HarryMunozg estamos Comprometidos con la felicidad de nuestros clientes.....\\n#peluchesquiquesam en Peluches Qui… https://t.co/SgBfd6qTPb\u0027]\t4.60089143\t-74.0805567\thttps://twitter.com/statuses/1023283143720108034\tPoint(-74.0805567, 4.60089143)\tmagellan.Polygon@9f6ee64b\tSANTA INES\n[\u0027Le gustó la compota👌🏼 en Bogotá, Colombia https://t.co/ujrIy0r22L\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023283347307618305\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@94b6113f\tSANTA INES\n[\u0027Anoche \\n\\n📸  @mr_masamorra \\n\\n#Instaphoto #Night #City #CityWalk #Street #StreetStyle #Bogotá #Colombia #LatinAmerica… https://t.co/KU4C4AOsSh\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023283694717493248\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@dc5783cd\tSANTA INES\n[\u0027Grupo de ODONTOLOGIA NEUROLINGUISTICA de COLOMBIA 🇨🇴 #neurolinguistica #neuro #neurociencias… https://t.co/AUzBpbcokX\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023283973454098433\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@83dedd4c\tSANTA INES\n[\u0027🌃\\n\\n📸  @mr_masamorra \\n\\n#Instaphoto #Night #City #CityWalk #Street #StreetStyle #Bogotá #Colombia #LatinAmerica… https://t.co/iF4y9WPfOA\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023284871458942978\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@e3e2b83e\tSANTA INES\n[\u0027Lomo al trapo y costillas a la brasa en Bogotá, Colombia https://t.co/7T6G7254Gw\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023284891058810881\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@a9d42175\tSANTA INES\n[\u0027🌠\\n\\n📸  @mr_masamorra \\n\\n#Instaphoto #Night #City #CityWalk #Street #StreetStyle #Bogotá #Colombia #LatinAmerica… https://t.co/zRnewBhjKp\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023285001440223232\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@f10514f8\tSANTA INES\n[\u0027Super clásico hoy a través de @canalrcn.nTodos invitados @jotasmantilla @MelissaMarRCN @manuelbbaquero en Bogotá, C… https://t.co/z1X0zdmfh1\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023285856814223360\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@b1425d49\tSANTA INES\n[\u0027Tú vida es tuya, tú verás qué haces con ella. 💯🔥👊🏻n@giancarloinf @ceosoficialn#Life #MyLife #Desiciones #Time… https://t.co/X9J9lSs7qk\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023286496487526401\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@36f7e50c\tSANTA INES\n[\u0027Almuercito con la colonia peruana en Bogotá por los #194 años de independencia #feliz28dejulio \\nFeliz de volver a c… https://t.co/jod9T9fYuT\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023287277546627072\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@9b975a62\tSANTA INES\n[\u0027Acaba de publicar una foto en Bogotá, Colombia https://t.co/SecCe6zqIr\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023288005291921409\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@4b199a21\tSANTA INES\n[\u0027King of Seduction Absolute de Antonio Banderas 🆕\\nNotas de olor frutales y amaderadas\\n\\n💖 💯%originales\\n💖 Fragancias i… https://t.co/lGAGTyVQjs\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023288145104629760\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@b01d67a0\tSANTA INES\n[\u0027King of Seduction de Antonio Banderas\\nNota de olor esencias aromáticas\\n\\n💖 💯%originales\\n💖 Fragancias importadas\\n💖 Ga… https://t.co/m6N0xjIaO9\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023288444007731202\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@8f436a73\tSANTA INES\n[\u0027Jeje, #Cellos nFeliz sábado para tod@s, bendiciones...!! 🙏✌️nn#MDeAmerica #Mariachi #Musica #PasionPorLaMusica… https://t.co/rA9wVOf0Nc\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023289281039618049\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@67d3320f\tSANTA INES\n[\u0027😊😊😊 en Bogotá, Colombia https://t.co/uzlEfBqi67\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023290656507277313\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@a118e3c2\tSANTA INES\n[\u0027Super delicious raw lunch at makeoutcolombianThe food and place is amazing!nIf you are ever at Bogota, you just hav… https://t.co/7vvBELaSmc\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023291140009799681\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@ac240d70\tSANTA INES\n[\u0027😃 @ Bogotá, Colombia https://t.co/T2USRCkPFS\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023291379785449472\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@a371e751\tSANTA INES\n[\u0027Al Son que toquen bailo en Bogotá, Colombia https://t.co/MGRbMXzpka\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023291664335609858\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@996f1b01\tSANTA INES\n[\u0027Hoy no podemos perder, regresa el amor #VamosLeones🦁⚽❤ en Bogotá, Colombia https://t.co/sKqDlPOhoE\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023292101532868608\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@b3ac960b\tSANTA INES\n[\u0027What a great time with iglesiacei at their #eseltiempo conference here in Bogota. I am constantly blown away by how… https://t.co/NMtI45H4El\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023292787184287744\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@d9eb8da2\tSANTA INES\n[\u0027✨❄⛅ en Bogotá, Colombia https://t.co/sElVBfwu0A\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023293118349803520\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@868e19e4\tSANTA INES\n[\u0027Antonio de Antonio Banderas 🚹\\nNota de olor frutal\\n\\n💖 💯%originales\\n💖 Fragancias importadas\\n💖 Garantizadas\\n💖 Pregunta… https://t.co/7SxToZdbbS\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023293253762916352\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@52c87c1f\tSANTA INES\n[\u0027Perfección. #PitbullsOnInstagram #Pitbulls #Dog en Bogotá, Colombia https://t.co/KHbwgG5ELa\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023293277410402307\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@c086d0ff\tSANTA INES\n[\u0027Caminando! #lacasa #rockdebogota #rockdecolombia #love  #music en Bogotá, Colombia https://t.co/MpVWhwLnKe\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023293379764015104\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@bbe24a45\tSANTA INES\n[\u0027Quedate a mi lado ahora ♪ en Bogotá, Colombia https://t.co/AsdQSI5j9N\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023293682697596928\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@33280059\tSANTA INES\n[\u0027Superar es necesario, seguir adelante es esencial y mirar hacia atrás es perder el tiempo. 💜😉 en Bogotá, Colombia https://t.co/8abybVGUWI\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023293753010868224\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@fe4f9615\tSANTA INES\n[\u0027#Repost @juanquinotez (get_repost)\\n・・・\\nEste miércoles a las 6pm todos conectados con #EVCMundial un gran abrazo… https://t.co/X0GZl7rpE1\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023293797235662849\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@c735437d\tSANTA INES\n[\u0027Electric Seduction de Antonio Banderas 🚹\\nNota de olor esencias aromáticas\\n\\n💖 💯%originales\\n💖 Fragancias importadas\\n💖… https://t.co/RmoqbDa9f1\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023294766707105794\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@9d9c79d5\tSANTA INES\n[\u0027The Golden Secret de Antonio Banderas 🚹\\nNota de olor cítrica\\n\\n💖 💯%originales\\n💖 Fragancias importadas\\n💖 Garantizadas… https://t.co/sXAsHcBuSV\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023295539830566915\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@5c5043eb\tSANTA INES\n[\u0027Una tarde para arruncharse en Bogotá, Colombia https://t.co/wY8WoRIIDE\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023297557789896704\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@72fb1188\tSANTA INES\n[\u0027Acaba de publicar una foto en Bogotá, Colombia https://t.co/jGFNo3EuPa\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023297873839046657\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@6e7fa6cd\tSANTA INES\n[\u0027En un mes cumple 14 y todavía sigue con la costumbre de ir a mi cama a leer sobre dinosaurios. No pido mucho para m… https://t.co/HUvuy9E8y6\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023298570701692929\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@5fa110df\tSANTA INES\n[\u0027The Secret de Antonio Banderas 🚹\\nNotas de olor frutales y amaderados\\n\\n💖 💯%originales\\n💖 Fragancias importadas\\n💖 Gara… https://t.co/06Lvsly9RC\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023299128003100672\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@94d9ef56\tSANTA INES\n[\u0027Lección inagural de posgrados de la @universidadudca. ¡Un gusto compartir con sus estudiantes y directivos!… https://t.co/iC0mf7feK3\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023299803734716416\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@5e1fe137\tSANTA INES\n[\u0027Seduction un Black de Antonio Banderas 🚹\\nNota de olor esencias aromáticas\\n\\n💖 💯%originales\\n💖 Fragancias importadas\\n💖… https://t.co/dVl6aWswx1\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023299827226931201\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@b0d901e4\tSANTA INES\n[\u0027“No one starts out on top, you have to work all your way up” 6amsuccess 💱👨🏻u200d💻💎 Most great people I know have attain… https://t.co/G3Qr6hHRcY\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023300015945465856\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@75b09f43\tSANTA INES\n[\u0027ME ENAMORÉ - disponible en mi canal de youtube vídeo oficial.nn#music n#MiMusicaNOPara🇨🇴 n#musicproducer en Bogotá,… https://t.co/QizUVU1A0B\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023300093204672514\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@ca82573b\tSANTA INES\n[\u0027Hoy con @turevistatu compartiendo el #diadefamilia #colegiosanluis @MAUROCASALLAS 🎉📸 en Bogotá, Colombia https://t.co/Uv6vdfyASp\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023300194916552705\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@1a4e6cad\tSANTA INES\n[\u0027... en Bogotá, Colombia https://t.co/kV0ksMCqyX\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023301507670794240\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@edb833e2\tSANTA INES\n[\u0027Mi bb hermosa no se puede quedar atrás con el Kiki challenge... 😍😍😍 Te amo... ❤️ en Bogotá, Colombia https://t.co/tUNkm2zB3A\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023302483530194944\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@52a58ca\tSANTA INES\n[\u0027Blue Seduction de Antonio Banderas 🚹\\nNotas de olor cítrica\\n\\n💖 💯%originales\\n💖 Fragancias importadas\\n💖 Garantizadas\\n💖… https://t.co/CBuUdTDQ5g\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023302761151119361\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@740441ef\tSANTA INES\n[\u0027Diavolo de Antonio Banderas 🚹\\nNota de olor amaderada\\n\\n💖 💯%originales\\n💖 Fragancias importadas\\n💖 Garantizadas\\n💖 Pregu… https://t.co/r5ZOXVQfpu\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023303411675131906\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@7fb267ee\tSANTA INES\n[\u0027Exito total en el Evento empresarial con #abductionparty #laminitkmasbacana #inflables #juegos #match #surfing… https://t.co/exGwnWWDBK\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023304679441068032\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@db4ae177\tSANTA INES\n[\u0027Aqua Brava de Antonio Puig 🚹\\nNota de olor amaderada\\n\\n💖 💯%originales\\n💖 Fragancias importadas\\n💖 Garantizadas\\n💖 Pregun… https://t.co/Xlbj7GWGpT\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023305133432684550\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@e89e08b8\tSANTA INES\n[\u0027Quórum de Antonio Puig 🚹\\nNota de olor amaderada\\n\\n💖 💯%originales\\n💖 Fragancias importadas\\n💖 Garantizadas\\n💖 Pregunta p… https://t.co/VGX03ZBoLG\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023305476606312448\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@6e64f26\tSANTA INES\n[\u0027Cold!! ❄❄⛄ en Bogotá, Colombia https://t.co/zJV9RM3FBe\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023306373373800449\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@d0d6713b\tSANTA INES\n[\u0027Mornings coffee ☕️\\nShop online / compra en línea  https://t.co/GWtfgVVXaI #bohrcafe #uncafeconhistoria… https://t.co/wsb6hul58g\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023307062095368193\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@f81a89fb\tSANTA INES\n[\u0027Llega el festivo voy a ver al león, rojo sos mi locura. 🦁🍻🇮🇩n#bbc # palenqueracocoporter #sabado #santafe en Bogotá… https://t.co/qE0M1jQIkn\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023307410654429184\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@2649ae3f\tSANTA INES\n[\u0027Las aves más espectaculares del mundo 😍❤️🇨🇴... #colibri #hummingbird #bogota #colombia #nature #nikon #japscompany… https://t.co/jUL5EwC7Ou\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023308566369849344\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@59e5d1ef\tSANTA INES\n[\u0027El mundo és acá!nnAyer estuve en la sede de la movimentacion  seamoscolombia en Bogotá, na Colômbia, para presentar… https://t.co/DR6hRNLuwq\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023309027843993600\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@a9bd04a0\tSANTA INES\n[\u0027Acaba de publicar una foto en Bogotá, Colombia https://t.co/dg8w7cxFy7\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023309884333465601\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@360b10a9\tSANTA INES\n[\u0027Acaba de publicar una foto en Bogotá, Colombia https://t.co/fDpTfj1cQE\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023310013203329024\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@df1aa89f\tSANTA INES\n[\u0027¿Vieron las huellitas?nn#photoofthedayn#me #selfie #man #guyn#instagood #instalike #instadaily en Bogotá, Colombia https://t.co/xHGtAJfqKK\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023311065210408966\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@6e31020\tSANTA INES\n[\u0027Hola todos, soy jhoán el bipolar, ahre. XD en Bogotá, Colombia https://t.co/r7dLVFGEdM\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023311723128860672\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@6d8fc224\tSANTA INES\n[\u0027United Dreams 🚹\\nNotas de olor citricas\\n\\n💖 💯%originales\\n💖 Fragancias importadas\\n💖 Garantizadas\\n💖 Pregunta por su val… https://t.co/OL1vkiWR3O\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023311934026727424\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@d176f362\tSANTA INES\n[\u0027#Repost @pirryoficial\\n• • •\\nQue nos fue mal en el tour? Que rápido se nos olvida que pasamos largos años sin siquie… https://t.co/gsimT8DWU6\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023312163535048704\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@1a817c76\tSANTA INES\n\"[\"\"Let\u0027s Move de Benetton 🚹\\nNota de olor cítrica\\n\\n💖 💯%originales\\n💖 Fragancias importadas\\n💖 Garantizadas\\n💖 Pregunta por… https://t.co/pUDlZJPQJr\"\"]\"\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023312265897025536\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@70cad0bf\tSANTA INES\n[\u0027Vida bonita la mía, un día te levantas y te das cuenta que eres realmente afortunado y te sientes más feliz que nun… https://t.co/ysoqWohos2\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023312817720619011\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@3122faa9\tSANTA INES\n[\u0027Seamos felices y libres 😆 at; Jart VL 😹\\n\\n#JartVL #music #life #libre #vida #venezuela #merida #colombia #cover… https://t.co/IB9dLQOu4q\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023313193425412097\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@a5f220d5\tSANTA INES\n[\u0027Terninando el último día de esta semana.#lipolisis  Como siempre, dispuesto a entregarle lo mejor a mis pacientes.… https://t.co/DqnD9J3fkb\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023313335360598016\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@3612291c\tSANTA INES\n[\u0027Benetton Verde de Benetton 🚹\\nNota de olor cítrica\\n\\n💖 💯%originales\\n💖 Fragancias importadas\\n💖 Garantizadas\\n💖 Pregunta… https://t.co/CpXgxJQPvj\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023313659366449153\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@be842627\tSANTA INES\n[\u0027Sport de Benetton 🚹\\nNota de olor esencias aromáticas\\n\\n💖 💯%originales\\n💖 Fragancias importadas\\n💖 Garantizadas\\n💖 Pregu… https://t.co/jViEySzIpQ\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023314069900722176\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@59a6ace0\tSANTA INES\n[\u0027Cold de Benetton 🚹\\nNota de olor cítrica\\n\\n💖 💯%originales\\n💖 Fragancias importadas\\n💖 Garantizadas\\n💖 Pregunta por su va… https://t.co/u90vxZRK46\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023314463535972352\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@f9a5b37e\tSANTA INES\n[\u0027On the road again. My last two days in Colombia. Two more Airbnbs, the museum of Gold, a final bridge match and und… https://t.co/lAJH6HoAdD\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023314466174390274\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@7873532b\tSANTA INES\n[\u0027United Unisex de Benetton 🚹\\nNota de olor frutal\\n\\n💖 💯%originales\\n💖 Fragancias importadas\\n💖 Garantizadas\\n💖 Pregunta p… https://t.co/8fBZRAbUuZ\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023315082917433344\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@f73e3044\tSANTA INES\n[\u0027United Colors de Benetton 🚹\\nNota de olor cítrica\\n\\n💖 💯%originales\\n💖 Fragancias importadas\\n💖 Garantizadas\\n💖 Pregunta… https://t.co/wXx74L1FKD\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023315714789318656\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@17e3782f\tSANTA INES\n[\u0027Se está poniendo vieja ya son 10añosnTe quiero #katerinenFeliz cumpleaños en Bogotá, Colombia https://t.co/DiutOst02I\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023316028875517953\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@1054125c\tSANTA INES\n[\u0027Si el camino es bello, no preguntemos a donde va. AF en Bogotá, Colombia https://t.co/1p95Ulfk22\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023316121502576640\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@21f77dd5\tSANTA INES\n[\u0027Nero de Benetton 🚹\\nNota de olor cítrica\\n\\n💖 💯%originales\\n💖 Fragancias importadas\\n💖 Garantizadas\\n💖 Pregunta por su va… https://t.co/mntsv3NNbe\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023316259897794566\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@2f53c857\tSANTA INES\n[\u0027Lichi, Mangonstino, Chontaduro, Zapote, Anones, #bogota #colombia #colombian #fruits #fruitsexotiques #travel #trip… https://t.co/ceJCSuI5RS\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023316475023646721\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@e0c64f51\tSANTA INES\n[\u0027Amo pasar tiempo contigo mi chiquitina hermosa en Bogotá, Colombia https://t.co/aH1A4xDQnt\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023316692913610755\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@6f385fdd\tSANTA INES\n[\u0027Encontré una gran variedad de calabacitas pequeñitas - Bogotá  #ahuyamas #calabazas #verduras #vegetales… https://t.co/N7ADALH6Bz\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023316708235333633\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@bec02e1\tSANTA INES\n[\u0027Blu de Benetton 🚹\\nNota de olor cítrica\\n\\n💖 💯%originales\\n💖 Fragancias importadas\\n💖 Garantizadas\\n💖 Pregunta por su val… https://t.co/s71CcDVnbq\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023316767492517889\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@31a059ac\tSANTA INES\n[\u0027Por donde te mires Colombia Verde Maravillosa!  #montañas #cordilleradelosandes #cordillera #colombian #bogota… https://t.co/oQHjoEQH60\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023316902918193158\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@1e507465\tSANTA INES\n[\u0027#tbt #worldcup2014 #worldcupsub20 en Bogotá, Colombia https://t.co/46sKIfatkS\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023317121114230790\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@23c63a3f\tSANTA INES\n[\u0027Remember #leclick - tonight is the night 136bpm of euro dance 💿 #bogota #colombia #city #housemusic #deephouse… https://t.co/BleyInfkdm\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023317151720112129\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@4ac21012\tSANTA INES\n[\u0027Energy de Benetton 🚹\\nNota de olor cítrica\\n\\n💖 💯%originales\\n💖 Fragancias importadas\\n💖 Garantizadas\\n💖 Pregunta por su… https://t.co/mtqpdpYPym\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023317511251677184\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@4a8caa39\tSANTA INES\n[\u0027B United Jeans de Benetton 🚹\\nNota de olor cítrica\\n\\n💖 💯%originales\\n💖 Fragancias importadas\\n💖 Garantizadas\\n💖 Pregunta… https://t.co/acXHKOKXrH\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023317618730696710\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@9e4fce2d\tSANTA INES\n[\u0027#bomdia #todobom #happy #bogota 🇨🇴 #selfietime #faceperfect #working #kisses 😊 😊 😊 en Bogotá, Colombia https://t.co/JDwKIN8NLF\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023318079369932800\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@5b8cf15b\tSANTA INES\n[\u0027Linda la abuelita...n😚😚😚n#Grandmother  #picoftheday  #love  #Saturday en Bogotá, Colombia https://t.co/gdmf96nqbQ\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023318126891593730\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@6c22e133\tSANTA INES\n[\u0027Nuevamente volveremos! @ Bogotá, Colombia https://t.co/RH3KnBRwdo\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023318595982553088\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@203f1fa5\tSANTA INES\n[\u0027Essence de Benetton 🚹\\nNota de olor cítrica\\n\\n💖 💯%originales\\n💖 Fragancias importadas\\n💖 Garantizadas\\n💖 Pregunta por su… https://t.co/4Em2rKFaPk\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023318709333618688\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@f9f9783e\tSANTA INES\n[\u0027B-United de Benetton 🚹nn💖 💯%originalesn💖 Fragancias importadasn💖 Garantizadasn💖 Pregunta por su valor, Whatsapp 311… https://t.co/pOOy4TiExM\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023319376567488512\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@b42f9194\tSANTA INES\n[\u0027Color Cumbia de Benetton 🚹\\nNota de olor esencias aromáticas\\n\\n💖 💯%originales\\n💖 Fragancias importadas\\n💖 Garantizadas… https://t.co/pqyOO35zzW\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023320169622331392\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@a32833fb\tSANTA INES\n[\u0027Paradiso Inferno de Benetton 🚹\\nNota de olor floral\\n\\n💖 💯%originales\\n💖 Fragancias importadas\\n💖 Garantizadas\\n💖 Pregunt… https://t.co/cnDIS7sSq9\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023320645772431360\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@fba0ee3f\tSANTA INES\n\"[\u0027GERARDO ROSALES \"\"SALSA MUNDIAL\"\" AÑO 2009 - CALLEJERO MUSIC.\\nSALSA MUNDIAL FEAT @Redlouis1963 \\nMEREZCO UN GRAMMY… https://t.co/ews2meKVar\u0027]\"\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023322248294395904\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@da1a40d5\tSANTA INES\n[\u0027Tia de un hermoso bebé U0001f9d2🏽💕 en Bogotá, Colombia https://t.co/W7adWL9cfK\u0027]\t4.5997\t-74.0794\thttps://twitter.com/statuses/1023322340799729665\tPoint(-74.0794, 4.5997)\tmagellan.Polygon@24324284\tSANTA INES"
+          },
+          {
+            "type": "HTML",
+            "data": "\u003cdiv class\u003d\"result-alert alert-warning\" role\u003d\"alert\"\u003e\u003cbutton type\u003d\"button\" class\u003d\"close\" data-dismiss\u003d\"alert\" aria-label\u003d\"Close\"\u003e\u003cspan aria-hidden\u003d\"true\"\u003e\u0026times;\u003c/span\u003e\u003c/button\u003e\u003cstrong\u003eOutput is truncated\u003c/strong\u003e to 102400 bytes. Learn more about \u003cstrong\u003eZEPPELIN_INTERPRETER_OUTPUT_LIMIT\u003c/strong\u003e\u003c/div\u003e"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1532957561293_-476192437",
+      "id": "20180727-222918_766081320",
+      "dateCreated": "Jul 30, 2018 1:32:41 PM",
+      "dateStarted": "Jul 30, 2018 1:54:31 PM",
+      "dateFinished": "Jul 30, 2018 1:54:31 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%md\n\nTweets en otros departamentos",
+      "user": "anonymous",
+      "dateUpdated": "Jul 30, 2018 1:55:15 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "markdown",
+          "editOnDblClick": true
+        },
+        "editorMode": "ace/mode/markdown",
+        "editorHide": true,
+        "tableHide": false
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "HTML",
+            "data": "\u003cp\u003eTweets en otros departamentos\u003c/p\u003e\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1532958711274_-657741368",
+      "id": "20180730-135151_473071733",
+      "dateCreated": "Jul 30, 2018 1:51:51 PM",
+      "dateStarted": "Jul 30, 2018 1:55:15 PM",
+      "dateFinished": "Jul 30, 2018 1:55:15 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "val departamentos \u003d sqlContext.read\n      .format(\"magellan\")\n      .option(\"type\", \"geojson\")\n      .load(\"/files/Colombia3.geojson\")\n      .select($\"polygon\", \n       $\"metadata\"(\"DPTO\").as(\"ID\"),\n       $\"metadata\"(\"NOMBRE_DPT\").as(\"NOMBRE_DPT\"),\n       $\"metadata\"(\"AREA\").as(\"AREA\"),\n       $\"metadata\"(\"PERIMETER\").as(\"PERIMETER\"),\n       $\"metadata\"(\"HECTARES\").as(\"HECTARES\"))\n      .cache()",
+      "user": "anonymous",
+      "dateUpdated": "Jul 30, 2018 2:11:03 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "departamentos: org.apache.spark.sql.Dataset[org.apache.spark.sql.Row] \u003d [polygon: polygon, ID: string ... 4 more fields]\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1532958915817_-1134755027",
+      "id": "20180730-135515_154529102",
+      "dateCreated": "Jul 30, 2018 1:55:15 PM",
+      "dateStarted": "Jul 30, 2018 1:56:05 PM",
+      "dateFinished": "Jul 30, 2018 1:56:05 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": " val tweets_dep \u003d tweets.join(departamentos)\n        .where($\"point\" within $\"polygon\")",
+      "user": "anonymous",
+      "dateUpdated": "Jul 30, 2018 1:56:28 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "tweets_dep: org.apache.spark.sql.Dataset[org.apache.spark.sql.Row] \u003d [tweet: string, latitude: double ... 9 more fields]\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1532958964946_341803982",
+      "id": "20180730-135604_1854329755",
+      "dateCreated": "Jul 30, 2018 1:56:04 PM",
+      "dateStarted": "Jul 30, 2018 1:56:28 PM",
+      "dateFinished": "Jul 30, 2018 1:56:29 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "tweets_dep.count()",
+      "user": "anonymous",
+      "dateUpdated": "Jul 30, 2018 1:56:37 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "res37: Long \u003d 9052\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1532958988770_-49839750",
+      "id": "20180730-135628_2052858122",
+      "dateCreated": "Jul 30, 2018 1:56:28 PM",
+      "dateStarted": "Jul 30, 2018 1:56:38 PM",
+      "dateFinished": "Jul 30, 2018 1:56:39 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "tweets_dep.printSchema()",
+      "user": "anonymous",
+      "dateUpdated": "Jul 30, 2018 1:56:51 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "root\n |-- tweet: string (nullable \u003d true)\n |-- latitude: double (nullable \u003d true)\n |-- longitude: double (nullable \u003d true)\n |-- url: string (nullable \u003d true)\n |-- point: point (nullable \u003d false)\n |-- polygon: polygon (nullable \u003d true)\n |-- ID: string (nullable \u003d true)\n |-- NOMBRE_DPT: string (nullable \u003d true)\n |-- AREA: string (nullable \u003d true)\n |-- PERIMETER: string (nullable \u003d true)\n |-- HECTARES: string (nullable \u003d true)\n\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1532958997594_566928061",
+      "id": "20180730-135637_1142848635",
+      "dateCreated": "Jul 30, 2018 1:56:37 PM",
+      "dateStarted": "Jul 30, 2018 1:56:51 PM",
+      "dateFinished": "Jul 30, 2018 1:56:51 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "tweets_dep\n      .groupBy(\u0027NOMBRE_DPT)\n      .count()\n      .orderBy($\"count\".desc).show()",
+      "user": "anonymous",
+      "dateUpdated": "Jul 30, 2018 1:57:18 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "+------------------+-----+\n|        NOMBRE_DPT|count|\n+------------------+-----+\n|       Bogotá D.C.| 3193|\n|         ANTIOQUIA| 1204|\n|             Cauca|  702|\n|         Atlántico|  680|\n|         MAGDALENA|  455|\n|      CUNDINAMARCA|  438|\n|           Bolívar|  393|\n|         SANTANDER|  267|\n|         RISARALDA|  205|\n|              META|  187|\n|            TOLIMA|  166|\n|             CESAR|  161|\n|            Boyacá|  151|\n|           QUINDIO|  148|\n|NORTE DE SANTANDER|  107|\n|           CORDOBA|  100|\n|            CALDAS|   90|\n|             HUILA|   80|\n|        LA GUAJIRA|   70|\n|            NARIÑO|   64|\n+------------------+-----+\nonly showing top 20 rows\n\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1532959011792_1302414716",
+      "id": "20180730-135651_1933970468",
+      "dateCreated": "Jul 30, 2018 1:56:51 PM",
+      "dateStarted": "Jul 30, 2018 1:57:19 PM",
+      "dateFinished": "Jul 30, 2018 1:57:21 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "tweets_dep.createOrReplaceTempView(\"tweets_dep\")",
+      "user": "anonymous",
+      "dateUpdated": "Jul 30, 2018 1:57:50 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": []
+      },
+      "apps": [],
+      "jobName": "paragraph_1532959038664_920004958",
+      "id": "20180730-135718_1841320458",
+      "dateCreated": "Jul 30, 2018 1:57:18 PM",
+      "dateStarted": "Jul 30, 2018 1:57:51 PM",
+      "dateFinished": "Jul 30, 2018 1:57:51 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%spark2.sql\n\nselect NOMBRE_DPT,count(*) as total from tweets_dep group by NOMBRE_DPT order by total desc",
+      "user": "anonymous",
+      "dateUpdated": "Jul 30, 2018 1:58:43 PM",
+      "config": {
+        "colWidth": 6.0,
+        "enabled": true,
+        "results": {
+          "0": {
+            "graph": {
+              "mode": "table",
+              "height": 338.0,
+              "optionOpen": false
+            }
+          }
+        },
+        "editorSetting": {
+          "language": "sql"
+        },
+        "editorMode": "ace/mode/sql"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TABLE",
+            "data": "NOMBRE_DPT\ttotal\nBogotá D.C.\t3193\nANTIOQUIA\t1204\nCauca\t702\nAtlántico\t680\nMAGDALENA\t455\nCUNDINAMARCA\t438\nBolívar\t393\nSANTANDER\t267\nRISARALDA\t205\nMETA\t187\nTOLIMA\t166\nCESAR\t161\nBoyacá\t151\nQUINDIO\t148\nNORTE DE SANTANDER\t107\nCORDOBA\t100\nCALDAS\t90\nHUILA\t80\nLA GUAJIRA\t70\nNARIÑO\t64\nSUCRE\t61\nCASANARE\t34\nCAUCA\t33\nCaquetá\t25\nGUAVIARE\t11\nCHOCO\t10\nPUTUMAYO\t10\nARAUCA\t4\nVICHADA\t2\nVAUPES\t1\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1532959070968_278490624",
+      "id": "20180730-135750_230637200",
+      "dateCreated": "Jul 30, 2018 1:57:50 PM",
+      "dateStarted": "Jul 30, 2018 1:58:08 PM",
+      "dateFinished": "Jul 30, 2018 1:58:10 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%spark2.sql\n\nselect NOMBRE_DPT,count(*) as total from tweets_dep group by NOMBRE_DPT order by total desc",
+      "user": "anonymous",
+      "dateUpdated": "Jul 30, 2018 1:59:00 PM",
+      "config": {
+        "colWidth": 6.0,
+        "enabled": true,
+        "results": {
+          "0": {
+            "graph": {
+              "mode": "pieChart",
+              "height": 390.0,
+              "optionOpen": false
+            },
+            "helium": {}
+          }
+        },
+        "editorSetting": {
+          "language": "sql"
+        },
+        "editorMode": "ace/mode/sql",
+        "editorHide": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TABLE",
+            "data": "NOMBRE_DPT\ttotal\nBogotá D.C.\t3193\nANTIOQUIA\t1204\nCauca\t702\nAtlántico\t680\nMAGDALENA\t455\nCUNDINAMARCA\t438\nBolívar\t393\nSANTANDER\t267\nRISARALDA\t205\nMETA\t187\nTOLIMA\t166\nCESAR\t161\nBoyacá\t151\nQUINDIO\t148\nNORTE DE SANTANDER\t107\nCORDOBA\t100\nCALDAS\t90\nHUILA\t80\nLA GUAJIRA\t70\nNARIÑO\t64\nSUCRE\t61\nCASANARE\t34\nCAUCA\t33\nCaquetá\t25\nGUAVIARE\t11\nCHOCO\t10\nPUTUMAYO\t10\nARAUCA\t4\nVICHADA\t2\nVAUPES\t1\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1532959088320_-2115016959",
+      "id": "20180730-135808_1663176332",
+      "dateCreated": "Jul 30, 2018 1:58:08 PM",
+      "dateStarted": "Jul 30, 2018 1:58:29 PM",
+      "dateFinished": "Jul 30, 2018 1:58:31 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%spark2.sql\n",
+      "user": "anonymous",
+      "dateUpdated": "Jul 30, 2018 2:05:02 PM",
+      "config": {},
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "jobName": "paragraph_1532959502064_1563166080",
+      "id": "20180730-140502_1097254479",
+      "dateCreated": "Jul 30, 2018 2:05:02 PM",
+      "status": "READY",
+      "progressUpdateIntervalMs": 500
+    }
+  ],
+  "name": "Test3",
+  "id": "2DJYUX36V",
+  "angularObjects": {
+    "2CHS8UYQQ:shared_process": [],
+    "2C8A4SZ9T_livy2:shared_process": [],
+    "2CK8A9MEG:shared_process": [],
+    "2C4U48MY3_spark2:shared_process": [],
+    "2CKAY1A8Y:shared_process": [],
+    "2CKEKWY8Z:shared_process": []
+  },
+  "config": {},
+  "info": {}
+}
